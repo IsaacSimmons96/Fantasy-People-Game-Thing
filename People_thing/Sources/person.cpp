@@ -4,14 +4,16 @@
 using namespace std;
 
 
-Person::Person(const string new_name, string new_surname, const Gender sex, const Month Bmonth, const int Byear, const int Bday)
+Person::Person(const string new_name, string new_surname, const Gender sex, const Ethnicity eth,const Month Bmonth, const int Byear, const int Bday)
 {
 	NAME = new_name;
 	SURNAME = new_surname;
 	GENDER = sex;
+	ETHNICITY = eth;
 	BIRTH_DAY = Bday;
 	BIRTH_MONTH = Bmonth;
 	BIRTH_YEAR = Byear;
+	
 
 	if (BIRTH_DAY == -1)
 	{
@@ -85,12 +87,25 @@ string Person::get_birth_date_string()
 	return s;
 }
 
-string Person::get_gender_string(Gender sex)
+string Person::get_gender_string()
 {
-	if (sex == Male) { return "Male"; }
+	if (GENDER == Male) { return "Male"; }
 
-	else if (sex == Female) { return "Female"; }
+	else if (GENDER == Female) { return "Female"; }
 
+	else
+	{
+		return false;
+	}
+}
+
+string Person::get_ethnicity_string()
+{
+	if	(ETHNICITY == White)		{ return "White"; }
+	else if(ETHNICITY == Black) { return "Black"; }
+	else if (ETHNICITY == Asian) { return "Asian"; }
+	else if (ETHNICITY == Arab) { return "Arab"; }
+	else if (ETHNICITY == Mixed)	{ return "Mixed"; }
 	else
 	{
 		return false;
@@ -99,7 +114,8 @@ string Person::get_gender_string(Gender sex)
 
 void Person::print_info(int i)
 {
-	cout << endl << "Person " << i << endl << " NAME   : " << get_forename() << " " << get_surname() << endl << " GENDER : " << get_gender_string(GENDER);
+	cout << endl << "Person " << i << endl << " NAME   : " << get_forename() << " " << get_surname() << endl << " GENDER : " << get_gender_string() << endl << " ETHNIC : " << get_ethnicity_string();
 	cout << endl << " DOB    : " << get_birth_date_string() << endl;
+
 
 }

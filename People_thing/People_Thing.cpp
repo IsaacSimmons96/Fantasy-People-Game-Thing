@@ -23,12 +23,12 @@ Person* generate_random_person(vector<string> m_names, vector<string> f_names, v
 
 	if (temp == 0)
 	{
-		Person* person = new Person(m_names[rand() % m_names.size()], s_names[rand() % s_names.size()], Male, static_cast<Month>(rand() % December + January), rand() % 99 + 1920);
+		Person* person = new Person(m_names[rand() % m_names.size()], s_names[rand() % s_names.size()], Male, Ethnicity(rand() % INVALID), static_cast<Month>(rand() % December + January), rand() % 99 + 1920);
 		return person;
 	}
 	else if (temp == 1)
 	{
-		Person* person = new Person(f_names[rand() % f_names.size()], s_names[rand() % s_names.size()], Female, static_cast<Month>(rand() % December + January), rand() % 99 + 1920);
+		Person* person = new Person(f_names[rand() % f_names.size()], s_names[rand() % s_names.size()], Female, Ethnicity(rand() % INVALID), static_cast<Month>(rand() % December + January), rand() % 99 + 1920);
 		return person;
 	}
 
@@ -43,7 +43,7 @@ Person* generate_random_person(vector<string> m_names, vector<string> f_names, v
 
 int main()
 {
-	ifstream Stream1("Names.txt");
+	ifstream Stream1("Names_New.txt");
 	if (!Stream1.is_open()) {
 		cout << "Failed to open file" << endl;
 		return 0;
@@ -51,12 +51,11 @@ int main()
 
 	// LIST CONTAINS 61797 ENTRIES
 	vector<string> Mnames, Fnames, Snames;
-	string yr, sex, FirstForename, number, rank, position, Surname;
+	string sex, FirstForename, Surname;
 	string line;
 
 	while (getline(Stream1, line)) {
 		stringstream ss(line);
-		getline(ss, yr, ',');
 		getline(ss, sex, ',');
 		getline(ss, FirstForename, ',');
 
@@ -71,6 +70,7 @@ int main()
 
 	}
 	Stream1.close();
+	cout << "Finished Names CSV" << endl << endl;
 
 	ifstream Stream2("Surnames.txt");
 	if (!Stream2.is_open()) {
@@ -85,22 +85,25 @@ int main()
 
 	}
 	Stream2.close();
+	cout << "Finished Surnames CSV" << endl << endl;
 
 	list<Person*> People;
 
 	srand(time(0));
 
+	cout << "Starting People Generation" << endl << endl;
 	for (int i = 0; i != 100; i++)
 	{
 		People.push_back(generate_random_person(Mnames, Fnames, Snames));
 	}
+	cout << "Finished People Generation" << endl << endl;
 
 
-
-	Person* Isaac = new Person("Isaac", "Simmons", Male, April, 1996, 26);
-	Person* Terri = new Person("Terri", "Gardner", Female, January, 1996, 14);
+	Person* Isaac = new Person("Isaac", "Simmons", Male, White, April, 1996, 26);
+	Person* Terri = new Person("Terri", "Gardner", Female, White, January, 1996, 14);
 	People.push_back(Isaac);
 	People.push_back(Terri);
+
 
 	int i = 1;
 	for (list<Person*>::iterator it = People.begin(); it != People.end(); it++)
