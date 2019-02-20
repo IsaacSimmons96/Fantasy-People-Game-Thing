@@ -157,24 +157,50 @@ int main()
 	list<SETTLEMENT*>::iterator it = settlements.begin();
 	cout << "***SETTLEMENTS***" << endl << endl << "PLACE NAME      : " << (*it)->get_city_name() << endl << "PLACE TYPE      : " << (*it)->get_city_type() << endl  << "PLACE POST AREA : " <<  (*it)->get_city_postcode_area() << endl;
 
-	(*it)->add_city_district("Peasant Park", 38, mixed);
-	(*it)->add_city_district("Swaglord Cresent", 39, living);
-	(*it)->add_city_district("Wild West", 40, shopping);
+	int district_numm = rand() % 8;
+
+	for (int i = 0; i < district_numm; i++)
+	{
+		int num = rand() % 100;
+		int z = rand() % 4;
+
+		if (z == 0)
+		{
+			(*it)->add_city_district(Snames[rand() % 8000] += " Park", num, district_type(rand() % 4));
+		}
+		else if (z == 1)
+		{
+			(*it)->add_city_district(Snames[rand() % 8000] += " Hills", num, district_type(rand() % 4));
+		}
+		else if (z == 2)
+		{
+			(*it)->add_city_district(Snames[rand() % 8000] += " Square", num, district_type(rand() % 4));
+		}
+		else
+		{
+			(*it)->add_city_district(Snames[rand() % 8000] += " Cresent", num, district_type(rand() % 4));
+		}
+		
+	}
+
 
 
 	for (int i = 0; i < (*it)->get_city_districts()->size(); i++) 
 	{
 			int num = rand() % 210;
-
-		(*it)->get_city_district(i)->add_district_street(Snames[rand() % 2000] += " Road", num);
-		num++;
-		(*it)->get_city_district(i)->add_district_street(Snames[rand() % 2000] += " Road", num);
-		num++;
-		(*it)->get_city_district(i)->add_district_street(Snames[rand() % 2000] += " Road", num);
-		num++;
-		(*it)->get_city_district(i)->add_district_street(Snames[rand() % 2000] += " Road", num);
-		num++;
-		(*it)->get_city_district(i)->add_district_street(Snames[rand() % 2000] += " Road", num);
+			for (int j = 0; j < 6; j++) 
+			{
+				int z = rand() % 2;
+				if (z == 0)
+				{
+					(*it)->get_city_district(i)->add_district_street(Snames[rand() % 5000] += " Road", num);
+				}
+				else
+				{
+					(*it)->get_city_district(i)->add_district_street(Snames[rand() % 5000] += " Street", num);
+				}
+				num++;
+			}
 	}
 
 
