@@ -2,7 +2,7 @@
 #include "../Headers/time.h"
 
 
-std::string Date::get_date()
+std::string DATE::get_date()
 {	
 	std::string ret = "";
 	ret += std::to_string(get_day()) + "/";

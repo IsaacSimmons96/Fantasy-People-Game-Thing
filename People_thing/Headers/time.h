@@ -4,31 +4,31 @@
 
 #include <string> 
 
-enum Month
+enum month
 {
 	January = 1, Febuary, March, April, May, June, July, August, September, October, November, December
 };
 
-class Date
+class DATE
 {
 
 private:
-	Month month = April;
-	int time = 17, day = 20, year = 2019;
+	month d_month = April;
+	int d_time = 17, d_day = 20, d_year = 2019;
 
 public:
 
 	std::string get_date();
 
-	int get_day()		{ return day; }
-	Month get_month()	{ return month; }
-	int get_year()		{ return year; }
-	int get_time()		{ return time; }
+	int get_day()		{ return d_day; }
+	month get_month()	{ return d_month; }
+	int get_year()		{ return d_year; }
+	int get_time()		{ return d_time; }
 
-	void set_day(int new_day)		{ day = new_day; }
-	void set_month(Month new_month) { month = new_month; }
-	void set_year(int new_year)		{ year = new_year; }
-	void set_time(int new_time)		{ time = new_time; }
+	void set_day(int new_day)		{ d_day = new_day; }
+	void set_month(month new_month) { d_month = new_month; }
+	void set_year(int new_year)		{ d_year = new_year; }
+	void set_time(int new_time)		{ d_time = new_time; }
 };
 
 
