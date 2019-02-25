@@ -63,9 +63,10 @@ int main()
 	}
 
 	// LIST CONTAINS 61797 ENTRIES
-	string* Mnames = new string[26756];
-	string* Fnames = new string[35041];
-	string* Snames = new string[14675];
+	static const size_t mnames_size = 26756, fnames_size = 35041, snames_size = 14675;
+	static string* Mnames = new string[mnames_size];
+	static string* Fnames = new string[fnames_size];
+	static string* Snames = new string[snames_size];
 	string sex, FirstForename, Surname;
 	string line;
 
@@ -111,7 +112,7 @@ int main()
 	cout << "Finished Surnames CSV" << endl << endl;
 
 
-	list<PERSON*> People;
+	static list<PERSON*> People;
 
 	srand(time(0));
 
@@ -149,7 +150,7 @@ int main()
 #pragma endregion people generation
 
 
-	list<SETTLEMENT*> settlements;
+	static list<SETTLEMENT*> settlements;
 
 	SETTLEMENT* first_settle = new SETTLEMENT("Ashford", village);
 	settlements.push_back(first_settle);

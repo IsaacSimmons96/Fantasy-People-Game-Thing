@@ -35,7 +35,7 @@ private:
 	std::string postcode_area;
 	city_type type;
 	long city_population;
-    std::vector<DISTRICT> districts;
+	std::vector<DISTRICT> districts;
 
 };
 
