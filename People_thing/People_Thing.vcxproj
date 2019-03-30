@@ -151,10 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Headers\district.h" />
     <ClInclude Include="Headers\person.h" />
-    <ClInclude Include="Headers\settlement.h" />
-    <ClInclude Include="Headers\street.h" />
     <ClInclude Include="Headers\time.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Sources\district.h" />
@@ -167,10 +164,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="People_Thing.cpp" />
-    <ClCompile Include="Sources\district.cpp" />
     <ClCompile Include="Sources\person.cpp" />
-    <ClCompile Include="Sources\settlement.cpp" />
-    <ClCompile Include="Sources\street.cpp" />
     <ClCompile Include="Sources\time.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
