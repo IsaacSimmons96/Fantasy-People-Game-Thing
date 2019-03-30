@@ -4,7 +4,6 @@
 #include "pch.h"
 #include "../People_Thing/Headers/person.h"
 #include "../People_Thing/Headers/time.h"
-#include "../People_Thing/Headers/settlement.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -14,6 +13,7 @@
 #include <time.h>     
 #include <utility>
 
+
 using namespace std;
 
 DATE* world_time = new DATE();
@@ -21,26 +21,25 @@ DATE* world_time = new DATE();
 PERSON* generate_random_person(string m_names[], string f_names[], string s_names[])
 {
 
-	int temp = rand() % 2;
+	int temp = rand() % 3;
 
-	if (temp == 0)
+	if ( temp == 0 )
 	{
-		PERSON* person = new PERSON(m_names[rand() % 26756], s_names[rand() % 14675], Male, ethnicity(rand() % INVALID), static_cast<month>(rand() % December + January), rand() % 99 + 1920);
+		PERSON* person = new PERSON(m_names[rand() % 26756], s_names[rand() % 14675], Male, race(rand() % INVALID), character_class(rand() % INVALID), static_cast<month>(rand() % December + January), rand() % 99 + 1920);
 		return person;
 		delete(person);
 	}
-	else if (temp == 1)
+	else if ( temp == 1 )
 	{
-		PERSON* person = new PERSON(f_names[rand() % 35041], s_names[rand() % 14675], Female, ethnicity(rand() % INVALID), static_cast<month>(rand() % December + January), rand() % 99 + 1920);
+		PERSON* person = new PERSON(f_names[rand() % 35041], s_names[rand() % 14675], Female, race(rand() % INVALID), character_class(rand() % INVALID), static_cast<month>(rand() % December + January), rand() % 99 + 1920);
 		return person;
 		delete(person);
 	}
-
-	else
+	else if ( temp == 2 )
 	{
-		cout << "ERROR GENDER IS NOT BOY OR GIRL" << endl;
-		cout << "TEMP = " << temp << endl;
-
+		PERSON* person = new PERSON(s_names[rand() % 14675], s_names[rand() % 14675], None, race(rand() % INVALID), character_class(rand() % INVALID), static_cast<month>(rand() % December + January), rand() % 99 + 1920);
+		return person;
+		delete(person);
 	}
 }
 
@@ -128,8 +127,8 @@ int main()
 
 	seconds = difftime(time(0), now);
 
-	PERSON* Isaac = new PERSON("Isaac", "Simmons", Male, White, April, 1996, 26);
-	PERSON* Terri = new PERSON("Terri", "Gardner", Female, White, January, 1996, 14);
+	PERSON* Isaac = new PERSON("Isaac", "Simmons", Male, Orc, character_class::Darkknight, April, 1996, 26);
+	PERSON* Terri = new PERSON("Terri", "Gardner", Female, Elf, character_class::Beastmaster, January, 1996, 14);
 	People.push_back(Isaac);
 	People.push_back(Terri);
 
