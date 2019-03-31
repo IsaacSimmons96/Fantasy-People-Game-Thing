@@ -12,11 +12,16 @@
 #include <vector>
 #include <time.h>     
 #include <utility>
-
+#include <algorithm>
+#include <stdio.h>
+#include <math.h>
+#define _CRT_SECURE_NO_WARNINGS
 
 using namespace std;
-
+int d[100][100];
+#define MIN(x,y) ((x) < (y) ? (x) : (y))
 DATE* world_time = new DATE();
+
 
 PERSON* generate_random_person(string m_names[], string f_names[], string s_names[])
 {
@@ -41,6 +46,109 @@ PERSON* generate_random_person(string m_names[], string f_names[], string s_name
 		return person;
 		delete(person);
 	}
+}
+
+
+bool levenshtein_distance(const string string1, const string string2)
+{
+
+	int i, j, m, n, temp, tracker;
+	const int s1 = string1.length();
+	const int s2 = string2.length();
+	char* char_array1 = new char[s1 + 1];
+	char* char_array2 = new char[s2 + 1];
+
+	strncpy(char_array1, string1.c_str(), sizeof(char_array1));
+	strncpy(char_array2, string2.c_str(), sizeof(char_array2));
+
+	m = strlen(char_array1);
+	n = strlen(char_array2);
+
+	for (i = 0; i <= m; i++)
+		d[0][i] = i;
+	for (j = 0; j <= n; j++)
+		d[j][0] = j;
+
+	for (j = 1; j <= m; j++)
+	{
+		for (i = 1; i <= n; i++)
+		{
+			if (char_array1[i - 1] == char_array2[j - 1])
+			{
+				tracker = 0;
+			}
+			else
+			{
+				tracker = 1;
+			}
+			temp = MIN((d[i - 1][j] + 1), (d[i][j - 1] + 1));
+			d[i][j] = MIN(temp, (d[i - 1][j - 1] + tracker));
+		}
+	}
+	//printf("the Levinstein distance is %d\n", d[n][m]);
+
+	if (d[n][m] <= 2)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+	
+}
+
+void find_person( const list<PERSON*>& people_list)
+{
+	list<PERSON*> fuzzy_people, exact_people;
+	string search_term;
+	int count = 0;
+	cout << "Enter first name of person: ";
+	cin >> search_term;
+	cout << endl;
+	cout << endl;
+
+	std::transform(search_term.begin(), search_term.end(), search_term.begin(), ::tolower);
+
+
+	for (auto person : people_list)
+	{
+		string person_name = person->get_forename();
+		std::transform(person_name.begin(), person_name.end(), person_name.begin(), ::tolower);
+
+
+		if (person_name == search_term)
+		{
+			count++;
+			cout << "EXACT MATCH FOUND" << endl;
+			exact_people.push_back(person);
+		}
+		else if (levenshtein_distance(person_name, search_term))
+		{
+			count++;
+			cout << "FUZZY MATCH FOUND" << endl;
+			fuzzy_people.push_back(person);
+		}
+	}
+
+	if (count != 0)
+	{
+		for (auto person : exact_people) {
+			person->print_info();
+		}
+		for (auto person : fuzzy_people) {
+			person->print_info();
+		}
+		cin.clear();
+		cout << endl;
+	}
+	else if (count == 0)
+	{
+		cout << "NO MATCH FOUND" << endl;
+		cin.clear();
+		cout << endl;
+	}
+	
 }
 
 
@@ -136,7 +244,7 @@ int main()
 	int i = 1;
 	for (list<PERSON*>::iterator it = People.begin(); it != People.end(); it++)
 	{
-		(*it)->print_info(i);
+		(*it)->print_info();
 		cout << " AGE    : " + to_string((*it)->get_age(world_time->get_day(), world_time->get_month(), world_time->get_year())) << endl;
 		i++;
 	}
@@ -151,8 +259,26 @@ int main()
 
 	
 	total_seconds = difftime(time(0), start);
-	cout << endl << "Finished Program in " << total_seconds << " seconds " << endl << endl;
+	cout << endl << "Finished Generation & Printing in " << total_seconds << " seconds " << endl << endl;
+
+	string choice;
+
+	cout << "Do you wish to search for a person? Y or N" << endl;
+	cin >> choice;
+
+	while (choice == "Y" || choice == "y")
+	{
+		find_person(People);
+		cout << "Do you wish to search for another person? Y or N" << endl;
+		cin >> choice;
+		cout << endl;
+	} 
+
+
+	
 
 	return 0;
 }
+
+
 

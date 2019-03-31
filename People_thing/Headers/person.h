@@ -47,7 +47,7 @@ public:
 	character_class get_class()		{ return m_class; };
 	race get_race()					{ return m_race; };
 	  
-	void print_info(int i);
+	void print_info();
 
 
 private:

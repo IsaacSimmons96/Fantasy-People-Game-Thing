@@ -149,9 +149,9 @@ string PERSON::get_racial_string()
 	}
 }
 
-void PERSON::print_info(int i)
+void PERSON::print_info()
 {
-	cout << endl << "Person " << i << endl << " NAME   : " << get_forename() << " " << get_surname() << endl << " GENDER : " << get_gender_string() << endl << " RACE   : " << get_racial_string() << endl << " CLASS  : " << get_class_string();
+	cout << endl << " NAME   : " << get_forename() << " " << get_surname() << endl << " GENDER : " << get_gender_string() << endl << " RACE   : " << get_racial_string() << endl << " CLASS  : " << get_class_string();
 	cout << endl << " DOB    : " << get_birth_date_string() << endl;
 
 
