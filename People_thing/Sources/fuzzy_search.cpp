@@ -14,8 +14,8 @@ bool levenshtein_distance( const std::string string1, const std::string string2 
 	strncpy( char_array1, string1.c_str(), sizeof( char_array1 ) );
 	strncpy( char_array2, string2.c_str(), sizeof( char_array2 ) );
 
-	m = strlen( char_array1 );
-	n = strlen( char_array2 );
+	m = s1;
+	n = s2;
 
 	for ( i = 0; i <= m; i++ )
 		d[0][i] = i;

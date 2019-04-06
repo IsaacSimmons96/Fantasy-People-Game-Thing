@@ -184,13 +184,12 @@ PERSON* generate_random_person( string m_names[], string f_names[], string s_nam
 	}
 }
 
-void find_person( const std::list<PERSON*>& people_list )
+void find_person( const std::list<PERSON*>& people_list, string search_term )
 {
 	list<PERSON*> fuzzy_people, exact_people;
-	string search_term;
+	
 	int count = 0;
-	cout << "Enter first name of person: ";
-	cin >> search_term;
+
 	cout << endl;
 	cout << endl;
 
@@ -228,13 +227,11 @@ void find_person( const std::list<PERSON*>& people_list )
 			person->print_info();
 		}
 		cin.clear();
-		cout << endl;
 	}
 	else if ( count == 0 )
 	{
 		cout << "NO MATCH FOUND" << endl;
 		cin.clear();
-		cout << endl;
 	}
 
 }

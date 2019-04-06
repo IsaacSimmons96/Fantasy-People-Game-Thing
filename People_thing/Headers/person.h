@@ -66,6 +66,6 @@ private:
 
 PERSON* generate_random_person( std::string m_names[], std::string f_names[], std::string s_names[] );
 
-void find_person( const std::list<PERSON*>& people_list );
+void find_person( const std::list<PERSON*>& people_list, std::string search_term );
 
 #endif

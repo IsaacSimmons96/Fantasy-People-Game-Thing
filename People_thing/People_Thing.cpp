@@ -5,6 +5,7 @@
 #include <SFML\Graphics.hpp>
 #include "../People_Thing/Headers/person.h"
 #include "../People_Thing/Headers/time.h"
+#include "../People_Thing/Headers/button.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -12,12 +13,50 @@
 #include <vector>
 #include <time.h>     
 #include <utility>
+#include <math.h>
 #include <stdio.h>
 using namespace std;
+typedef sf::Color Colour;
 DATE* world_time = new DATE();
+Colour LightGrey = Colour( 211, 211, 211, 255 );
+Colour Grey = Colour( 169, 169, 169, 255 );
+
+void test( string s)
+{
+	cout << s << endl;
+}
+
 
 int main()
 {
+	
+	sf::RenderWindow window( sf::VideoMode( 1080, 720 ), "People Thing", sf::Style::Close | sf::Style::Titlebar );
+	sf::RectangleShape rect( sf::Vector2f( 100.0f, 100.0f ) );
+	sf::RectangleShape topbar( sf::Vector2f( 1080.0f, 50.0f ) );
+	topbar.setFillColor( Grey );
+	sf::RectangleShape panel( sf::Vector2f( 1080.0f, 720.0f ) );
+	panel.setFillColor( LightGrey );
+	sf::String playerInput;
+	rect.setFillColor( Colour::Yellow );
+	rect.setOrigin( 50.0f, 50.0f );
+
+	sf::Font font;
+	font.loadFromFile( "../People_Thing/Other/calibri.ttf" );
+	sf::Text search_entry;
+	search_entry.setFont( font );
+
+	search_entry.setCharacterSize( 24 ); // in pixels, not points!
+	search_entry.setFillColor( Colour::Black );
+	search_entry.setPosition( 850.0f, 10.0f );
+
+	sf::Text person_Name;
+	sf::Text person_Surname;
+	sf::Text person_Sex;
+	sf::Text person_Race;
+	sf::Text person_Class;
+	sf::Text person_Birthday;
+
+	string str;
 	time_t start;
 	time(&start);
 	double total_seconds;
@@ -91,7 +130,7 @@ int main()
 	time(&now);
 
 	cout << "Starting People Generation" << endl << endl;
-	for (int i = 0; i != 100; i++)
+	for (int i = 0; i != 1500; i++)
 	{
 		People.push_back(generate_random_person(Mnames, Fnames, Snames));
 	}
@@ -125,42 +164,74 @@ int main()
 	total_seconds = difftime(time(0), start);
 	cout << endl << "Finished Generation & Printing in " << total_seconds << " seconds " << endl << endl;
 
-	sf::RenderWindow window( sf::VideoMode( 200, 200 ), "SFML works!" );
-	sf::CircleShape shape( 100.f );
-	shape.setFillColor( sf::Color::Green );
+	
 
+	string choice;
+	bool searching_people = false;
+//	string srch = "Search";
+//	BUTTON search( srch,font,75.0f,25.0f, 400.0f, 200.0f,Colour::Yellow);
 	while ( window.isOpen() )
 	{
-		sf::Event event;
-		while ( window.pollEvent( event ) )
+		sf::Event evnt;
+		while ( window.pollEvent( evnt ) )
 		{
-			if ( event.type == sf::Event::Closed )
+			if ( evnt.type == sf::Event::Closed )
+			{
 				window.close();
+				return 0;
+			}
+			
+			if ( evnt.type == sf::Event::Resized )
+			{
+				cout << "Window width" << evnt.size.width << "Window height" << evnt.size.height << endl;
+			}
+
+			if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Enter ) )
+			{
+				if ( !str.empty() )
+				{
+					find_person( People, str );
+				}
+				str.clear();
+				search_entry.setString( str );
+			}
+
+			if ( evnt.type == sf::Event::TextEntered )
+			{
+				if ( evnt.text.unicode == '\b' )
+				{
+					if ( !str.empty() )
+					{
+						str.erase( str.size() - 1, 1 );
+					}
+
+					search_entry.setString( str );
+				}
+				else if ( evnt.text.unicode < 128 && evnt.text.unicode != '\r' )
+				{
+					str += evnt.text.unicode;
+					search_entry.setString( str );
+				}
+			}
 		}
 
 		window.clear();
-		window.draw( shape );
+		window.draw( panel );
+		window.draw( topbar );
+		window.draw( rect );
+		window.draw( search_entry );
 		window.display();
 	}
 
-
-	string choice;
-
-	cout << "Do you wish to search for a person? Y or N" << endl;
-	cin >> choice;
-
-	while (choice == "Y" || choice == "y")
+	/*while ( choice == "Y" || choice == "y" )
 	{
-		find_person(People);
+		find_person( People , "isaac" );
 		cout << "Do you wish to search for another person? Y or N" << endl;
 		cin >> choice;
 		cout << endl;
-	} 
-
+	}*/
 
 	
-
-	return 0;
 }
 
 
