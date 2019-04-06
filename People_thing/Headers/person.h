@@ -2,6 +2,8 @@
 #ifndef PERSON_H
 #define PERSON_H
 #include <string>
+#include <list>
+#include "fuzzy_search.h"
 #include "../Headers/time.h"
 
 enum gender
@@ -60,5 +62,10 @@ private:
 
 
 };
+
+
+PERSON* generate_random_person( std::string m_names[], std::string f_names[], std::string s_names[] );
+
+void find_person( const std::list<PERSON*>& people_list );
 
 #endif

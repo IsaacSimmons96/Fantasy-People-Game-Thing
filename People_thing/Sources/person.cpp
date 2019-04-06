@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "../Headers/person.h"
+#include <algorithm>
 #include <iostream>
 using namespace std;
 
@@ -154,5 +155,86 @@ void PERSON::print_info()
 	cout << endl << " NAME   : " << get_forename() << " " << get_surname() << endl << " GENDER : " << get_gender_string() << endl << " RACE   : " << get_racial_string() << endl << " CLASS  : " << get_class_string();
 	cout << endl << " DOB    : " << get_birth_date_string() << endl;
 
+
+}
+
+
+PERSON* generate_random_person( string m_names[], string f_names[], string s_names[] )
+{
+
+	int temp = rand() % 3;
+
+	if ( temp == 0 )
+	{
+		PERSON* person = new PERSON( m_names[rand() % 26756], s_names[rand() % 14675], Male, race( rand() % INVALID ), character_class( rand() % INVALID ), static_cast<month>(rand() % December + January), rand() % 99 + 1920 );
+		return person;
+		delete(person);
+	}
+	else if ( temp == 1 )
+	{
+		PERSON* person = new PERSON( f_names[rand() % 35041], s_names[rand() % 14675], Female, race( rand() % INVALID ), character_class( rand() % INVALID ), static_cast<month>(rand() % December + January), rand() % 99 + 1920 );
+		return person;
+		delete(person);
+	}
+	else if ( temp == 2 )
+	{
+		PERSON* person = new PERSON( s_names[rand() % 14675], s_names[rand() % 14675], None, race( rand() % INVALID ), character_class( rand() % INVALID ), static_cast<month>(rand() % December + January), rand() % 99 + 1920 );
+		return person;
+		delete(person);
+	}
+}
+
+void find_person( const std::list<PERSON*>& people_list )
+{
+	list<PERSON*> fuzzy_people, exact_people;
+	string search_term;
+	int count = 0;
+	cout << "Enter first name of person: ";
+	cin >> search_term;
+	cout << endl;
+	cout << endl;
+
+	std::transform( search_term.begin(), search_term.end(), search_term.begin(), ::tolower );
+
+
+	for ( auto person : people_list )
+	{
+		string person_name = person->get_forename();
+		std::transform( person_name.begin(), person_name.end(), person_name.begin(), ::tolower );
+
+
+		if ( person_name == search_term )
+		{
+			count++;
+			cout << "EXACT MATCH FOUND" << endl;
+			exact_people.push_back( person );
+		}
+		else if ( levenshtein_distance( person_name, search_term ) )
+		{
+			count++;
+			cout << "FUZZY MATCH FOUND" << endl;
+			fuzzy_people.push_back( person );
+		}
+	}
+
+	if ( count != 0 )
+	{
+		for ( auto person : exact_people )
+		{
+			person->print_info();
+		}
+		for ( auto person : fuzzy_people )
+		{
+			person->print_info();
+		}
+		cin.clear();
+		cout << endl;
+	}
+	else if ( count == 0 )
+	{
+		cout << "NO MATCH FOUND" << endl;
+		cin.clear();
+		cout << endl;
+	}
 
 }

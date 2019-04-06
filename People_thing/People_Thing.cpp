@@ -2,155 +2,19 @@
 //
 
 #include "pch.h"
+#include <SFML\Graphics.hpp>
 #include "../People_Thing/Headers/person.h"
 #include "../People_Thing/Headers/time.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <string>
-#include <list>
 #include <vector>
 #include <time.h>     
 #include <utility>
-#include <algorithm>
 #include <stdio.h>
-#include <math.h>
-#define _CRT_SECURE_NO_WARNINGS
-
 using namespace std;
-int d[100][100];
-#define MIN(x,y) ((x) < (y) ? (x) : (y))
 DATE* world_time = new DATE();
-
-
-PERSON* generate_random_person(string m_names[], string f_names[], string s_names[])
-{
-
-	int temp = rand() % 3;
-
-	if ( temp == 0 )
-	{
-		PERSON* person = new PERSON(m_names[rand() % 26756], s_names[rand() % 14675], Male, race(rand() % INVALID), character_class(rand() % INVALID), static_cast<month>(rand() % December + January), rand() % 99 + 1920);
-		return person;
-		delete(person);
-	}
-	else if ( temp == 1 )
-	{
-		PERSON* person = new PERSON(f_names[rand() % 35041], s_names[rand() % 14675], Female, race(rand() % INVALID), character_class(rand() % INVALID), static_cast<month>(rand() % December + January), rand() % 99 + 1920);
-		return person;
-		delete(person);
-	}
-	else if ( temp == 2 )
-	{
-		PERSON* person = new PERSON(s_names[rand() % 14675], s_names[rand() % 14675], None, race(rand() % INVALID), character_class(rand() % INVALID), static_cast<month>(rand() % December + January), rand() % 99 + 1920);
-		return person;
-		delete(person);
-	}
-}
-
-
-bool levenshtein_distance(const string string1, const string string2)
-{
-
-	int i, j, m, n, temp, tracker;
-	const int s1 = string1.length();
-	const int s2 = string2.length();
-	char* char_array1 = new char[s1 + 1];
-	char* char_array2 = new char[s2 + 1];
-
-	strncpy(char_array1, string1.c_str(), sizeof(char_array1));
-	strncpy(char_array2, string2.c_str(), sizeof(char_array2));
-
-	m = strlen(char_array1);
-	n = strlen(char_array2);
-
-	for (i = 0; i <= m; i++)
-		d[0][i] = i;
-	for (j = 0; j <= n; j++)
-		d[j][0] = j;
-
-	for (j = 1; j <= m; j++)
-	{
-		for (i = 1; i <= n; i++)
-		{
-			if (char_array1[i - 1] == char_array2[j - 1])
-			{
-				tracker = 0;
-			}
-			else
-			{
-				tracker = 1;
-			}
-			temp = MIN((d[i - 1][j] + 1), (d[i][j - 1] + 1));
-			d[i][j] = MIN(temp, (d[i - 1][j - 1] + tracker));
-		}
-	}
-	//printf("the Levinstein distance is %d\n", d[n][m]);
-
-	if (d[n][m] <= 2)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-	
-}
-
-void find_person( const list<PERSON*>& people_list)
-{
-	list<PERSON*> fuzzy_people, exact_people;
-	string search_term;
-	int count = 0;
-	cout << "Enter first name of person: ";
-	cin >> search_term;
-	cout << endl;
-	cout << endl;
-
-	std::transform(search_term.begin(), search_term.end(), search_term.begin(), ::tolower);
-
-
-	for (auto person : people_list)
-	{
-		string person_name = person->get_forename();
-		std::transform(person_name.begin(), person_name.end(), person_name.begin(), ::tolower);
-
-
-		if (person_name == search_term)
-		{
-			count++;
-			cout << "EXACT MATCH FOUND" << endl;
-			exact_people.push_back(person);
-		}
-		else if (levenshtein_distance(person_name, search_term))
-		{
-			count++;
-			cout << "FUZZY MATCH FOUND" << endl;
-			fuzzy_people.push_back(person);
-		}
-	}
-
-	if (count != 0)
-	{
-		for (auto person : exact_people) {
-			person->print_info();
-		}
-		for (auto person : fuzzy_people) {
-			person->print_info();
-		}
-		cin.clear();
-		cout << endl;
-	}
-	else if (count == 0)
-	{
-		cout << "NO MATCH FOUND" << endl;
-		cin.clear();
-		cout << endl;
-	}
-	
-}
-
 
 int main()
 {
@@ -260,6 +124,25 @@ int main()
 	
 	total_seconds = difftime(time(0), start);
 	cout << endl << "Finished Generation & Printing in " << total_seconds << " seconds " << endl << endl;
+
+	sf::RenderWindow window( sf::VideoMode( 200, 200 ), "SFML works!" );
+	sf::CircleShape shape( 100.f );
+	shape.setFillColor( sf::Color::Green );
+
+	while ( window.isOpen() )
+	{
+		sf::Event event;
+		while ( window.pollEvent( event ) )
+		{
+			if ( event.type == sf::Event::Closed )
+				window.close();
+		}
+
+		window.clear();
+		window.draw( shape );
+		window.display();
+	}
+
 
 	string choice;
 
