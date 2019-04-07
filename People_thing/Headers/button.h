@@ -12,7 +12,7 @@ class BUTTON
 	typedef void( *callback_function )(std::string);
 
 public:
-	BUTTON( std::string label, sf::Font font, float width, float height, float Xpos, float Ypos, const Colour col );
+	BUTTON( std::string label, float width, float height, float Xpos, float Ypos, const Colour col );
 	~BUTTON();
 
 	

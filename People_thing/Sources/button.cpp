@@ -5,17 +5,17 @@ typedef sf::Color Colour;
 
 
 
-BUTTON::BUTTON( std::string label, sf::Font font, float width, float height, float Xpos, float Ypos, const Colour col)
+BUTTON::BUTTON( std::string label, float width, float height, float Xpos, float Ypos, const Colour col)
 {
 	//set_on_click_func( function_pointer );
 	rectangle.setSize( sf::Vector2f( width, height ) );
 	rectangle.setFillColor( col );
 	rectangle.setPosition( Xpos, Ypos );
-	button_lable.setFont( font );
-	button_lable.setCharacterSize( 24 ); // in pixels, not points!
+	button_lable.setCharacterSize( 14 ); // in pixels, not points!
 	button_lable.setFillColor( Colour::Black );
-	button_lable.setPosition( width / 2, height / 2 );
-}
+	button_lable.setPosition( Xpos + ( width/2 ), Ypos + ( height / 2) );
+	button_lable.setString( label );
+} 
 
 BUTTON::~BUTTON()
 {

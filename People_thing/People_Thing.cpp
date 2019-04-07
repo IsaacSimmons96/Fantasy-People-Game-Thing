@@ -168,8 +168,16 @@ int main()
 
 	string choice;
 	bool searching_people = false;
-//	string srch = "Search";
-//	BUTTON search( srch,font,75.0f,25.0f, 400.0f, 200.0f,Colour::Yellow);
+	string srch = "Search";
+	BUTTON search( srch,75.0f,25.0f, 400.0f, 200.0f,Colour::Yellow);
+	BUTTON test( "test", 175.0f, 125.0f, 100.0f, 100.0f, Colour::Blue );
+	sf::Text button_lable = search.get_lable();
+	sf::Text button_lable2 = test.get_lable();
+	button_lable.setFont( font );
+	button_lable2.setFont( font );
+	sf::RectangleShape button_rect = search.get_rect();
+	sf::RectangleShape button_rect2 = test.get_rect();
+
 	while ( window.isOpen() )
 	{
 		sf::Event evnt;
@@ -220,6 +228,11 @@ int main()
 		window.draw( topbar );
 		window.draw( rect );
 		window.draw( search_entry );
+		window.draw( button_rect );
+		window.draw( button_lable );
+		window.draw( button_rect2 );
+		window.draw( button_lable2 );
+
 		window.display();
 	}
 
