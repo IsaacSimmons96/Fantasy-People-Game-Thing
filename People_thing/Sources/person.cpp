@@ -168,19 +168,16 @@ PERSON* generate_random_person( string m_names[], string f_names[], string s_nam
 	{
 		PERSON* person = new PERSON( m_names[rand() % 26756], s_names[rand() % 14675], Male, race( rand() % INVALID ), character_class( rand() % INVALID ), static_cast<month>(rand() % December + January), rand() % 99 + 1920 );
 		return person;
-		delete(person);
 	}
 	else if ( temp == 1 )
 	{
 		PERSON* person = new PERSON( f_names[rand() % 35041], s_names[rand() % 14675], Female, race( rand() % INVALID ), character_class( rand() % INVALID ), static_cast<month>(rand() % December + January), rand() % 99 + 1920 );
 		return person;
-		delete(person);
 	}
-	else if ( temp == 2 )
+	else
 	{
 		PERSON* person = new PERSON( s_names[rand() % 14675], s_names[rand() % 14675], None, race( rand() % INVALID ), character_class( rand() % INVALID ), static_cast<month>(rand() % December + January), rand() % 99 + 1920 );
 		return person;
-		delete(person);
 	}
 }
 

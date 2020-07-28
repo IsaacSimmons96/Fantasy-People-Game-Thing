@@ -30,6 +30,9 @@
     <ClInclude Include="Headers\fuzzy_search.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Headers\button.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -45,6 +48,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Sources\fuzzy_search.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\button.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
