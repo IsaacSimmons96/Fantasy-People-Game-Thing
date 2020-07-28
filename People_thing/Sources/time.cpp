@@ -1,5 +1,6 @@
 #include "pch.h"
-#include "../Headers/time.h"
+#include "..\Headers\typedefs.h"
+#include "..\Headers\time.h"
 
 
 std::string DATE::get_date()

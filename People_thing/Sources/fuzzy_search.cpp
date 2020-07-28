@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "..\Headers\typedefs.h"
 #include "../Headers/fuzzy_search.h"
 
 bool levenshtein_distance( const std::string string1, const std::string string2 )
@@ -8,6 +9,7 @@ bool levenshtein_distance( const std::string string1, const std::string string2 
 	int i, j, m, n, temp, tracker;
 	const int s1 = string1.length();
 	const int s2 = string2.length();
+
 	char* char_array1 = new char[s1 + 1];
 	char* char_array2 = new char[s2 + 1];
 

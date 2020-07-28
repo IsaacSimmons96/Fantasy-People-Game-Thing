@@ -1,5 +1,6 @@
 #include "pch.h"
-#include "../Headers/button.h"
+#include "..\Headers\typedefs.h"
+#include "..\Headers\button.h"
 
 typedef sf::Color Colour;
 

@@ -33,6 +33,12 @@
     <ClInclude Include="Headers\button.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Headers\dice_functions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\typedefs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -51,6 +57,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Sources\button.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\dice_functions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

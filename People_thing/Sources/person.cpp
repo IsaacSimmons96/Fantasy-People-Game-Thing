@@ -1,5 +1,6 @@
 #include "pch.h"
-#include "../Headers/person.h"
+#include "..\Headers\typedefs.h"
+#include "..\Headers\person.h"
 #include <algorithm>
 #include <iostream>
 using namespace std;
