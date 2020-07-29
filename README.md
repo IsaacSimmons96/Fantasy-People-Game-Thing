@@ -1,3 +1,4 @@
-# People_thing
-Making some sort of people database set in a fantasy world? 
-Ideally would want to make some sort of game from it when ive got the initial base done
+# dnd_npc_maker
+Joint project with my long time friend Harry
+Aim is to make a nice little program that will generate some NPC for dungeons and dragons with randomised variables
+such as race, looks, age and names
