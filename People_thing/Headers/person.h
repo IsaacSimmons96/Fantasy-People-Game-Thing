@@ -1,71 +1,76 @@
 #pragma once
-#ifndef PERSON_H
-#define PERSON_H
+
 #include <string>
 #include <list>
 #include "fuzzy_search.h"
-#include "../Headers/time.h"
+#include "..\Headers\typedefs.h"
 
-enum gender
+enum class GENDER : int8_t
 {
-	Male, Female, None
+	MALE,
+	FEMALE,
+	NONE
 };
 
-enum race 
+enum class RACE : int8_t 
 {
-	
-	Human,Elf,Dwarf,Orc,Lizardman,Horseman,Slimeling,Pixie,Ogre,HalfOrc,TallDwarf,HalfSlime,Croacker,Mechanoid,Howler,
-	INVALID
-	
-};
-
-enum class character_class
-{
-
-	Warrior,Mystic,Sage,Jester,Bard,Cleric,Paladin,Necromancer,Archer,Shadowblade,Beastmaster,Spellsword,Darkknight,Grovekeeper,Butcher,
-	INVALID
-
+	HUMAN,
+	ELF,
+	DWARF,
+	HALF_ORC,
+	END_OF_RACES // Keep this at the end of the enum
 };
 
 class PERSON
 {
-
 public:
+	PERSON(const string forename, string surname, const GENDER gender, const RACE race );
 
-	PERSON(const std::string new_name, std::string new_surname, const gender sex, const race rac, const character_class cla, const month Bmonth, const int Byear, const int Bday = -1);
+	static PERSON*	generate_random_person(std::string m_names[], std::string f_names[], std::string s_names[]);
+	static string	get_gender_string(GENDER gender);
+	static string	get_racial_string(RACE race);
 
-	std::string get_birth_date_string();
-	std::string get_gender_string();
-	std::string get_class_string();
-	std::string get_racial_string();
-	int get_age(int day, month month, int year);
-	
-	std::string get_forename()		{ return name; };
-	std::string get_surname()		{ return surname; };
-	gender get_gender()				{ return m_gender; };
-	int get_day_of_birth()			{ return birth_day; };
-	month get_month_of_birth()		{ return birth_month; };
-	int get_year_of_birth()			{ return birth_year; };
-	character_class get_class()		{ return m_class; };
-	race get_race()					{ return m_race; };
+	string	get_forename()	const	{ return m_forename; };
+	string	get_surname()	const	{ return m_surname; };
+
+	GENDER	get_gender()	const	{ return m_gender; };
+	RACE	get_race()		const	{ return m_race; };
 	  
-	void print_info();
-
+	void	print_info();
 
 private:
-	std::string name, surname;
-	gender m_gender; // MALE = 0, FEMALE = 1
-	int birth_day, birth_year;
-	month birth_month;
-	character_class m_class; // Warrior,Mystic,Sage,Jester,Bard,Cleric,Paladin,Necromancer,Archer,Shadowblade,Beastmaster,Spellsword,INVALID
-	race m_race; // Human,Elf,Dwarf,Orc,Lizardman,Horseman,Slimeling,Pixie,Ogre,HalfOrc,TallDwarf,HalfSlime,Croacker,Mechanoid,Howler,INVALID
+	void set_age();
 
+	// HARRY
+	// we prepend our classes variables with "m_" this is so it is easily identifiable which classes members in the class, and which are local variables in functions.
+	string	m_forename;
+	string	m_surname;
+	GENDER	m_gender;
+	RACE	m_race;
 
+	bool m_example_variable{ false }; //TODO Harry delete all traces of this varible when your done reading about it in the source file
+
+	//TODO Harry - Add an age variable think about the size of the integer we should use
+	// think about the oldest age a dungeon and dragons race can be!
+	// Take a look at the "Range of Values" table here https://en.cppreference.com/w/cpp/language/types
+	// The options we have are here 
+	// int8_t or uint8_t;
+	// int16_t or uint16_t;
+	// int32_t or uint32_t;
+	// int64_t or uint64_t;
+	// an usigned integer means it cant hold minus values, but it doubles its maximum size.
+	// for example int8_t is a signed character - which holds a range of -128 to 127
+	// however a uint8_t is an unsigned character - which holds a range of 0 - 255
+
+	//TODO Harry - Add a Hair Colour variable i suggest looking at how ive done RACE and GENDER and make another enum for HAIR_COLOUR
+
+	//TODO Harry - Add a Hair Style variable just like the above way of doing it. Could have BALD, LONG, SHORT, SHAVED, SHAGGY stuff like that
+
+	//TODO Harry - Add a Foot, and Inches height variables using integers  OR centimeters if you prefer
+	// Then  think of a way to give each person a good height dependant on their race!
+	// I suggest looking at the race base height table, and then using the "roll_dice" function inside "dice_functions.cpp" to follow how the players handbook decides it.
+
+	//TODO Harry - Add a Interaction Trait variable another enum! There is a table of these inside the Dungeon Masters Guide which i can send you a screenshot off when needed!
+	// Like the hieght, we can use the book suggestion on how to decide which trait we use by rolling a dice to decide
 };
 
-
-PERSON* generate_random_person( std::string m_names[], std::string f_names[], std::string s_names[] );
-
-void find_person( const std::list<PERSON*>& people_list, std::string search_term );
-
-#endif

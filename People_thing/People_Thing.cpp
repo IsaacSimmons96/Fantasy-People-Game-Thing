@@ -1,251 +1,168 @@
 // People_Thing.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
 
 #include "pch.h"
 #include <SFML\Graphics.hpp>
-#include "../People_Thing/Headers/person.h"
-#include "../People_Thing/Headers/time.h"
-#include "../People_Thing/Headers/button.h"
 #include <iostream>
-#include <fstream>
-#include <sstream>
 #include <string>
-#include <vector>
-#include <time.h>     
-#include <utility>
-#include <math.h>
-#include <stdio.h>
-using namespace std;
-typedef sf::Color Colour;
-DATE* world_time = new DATE();
-Colour LightGrey = Colour( 211, 211, 211, 255 );
-Colour Grey = Colour( 169, 169, 169, 255 );
+#include <sstream>
+#include <fstream>
+#include <windows.h>
+#include "..\People_thing\Headers\typedefs.h"
+#include "..\People_Thing\Headers\person.h"
 
-void test( string s)
+// HARRY
+// Keep this as true for your build harry :)
+constexpr bool is_harry_coding = true;
+
+//------------------------------------------------------------------------------------------------
+// simple function to sd::cout the supplied string
+//------------------------------------------------------------------------------------------------
+void print( string string_in)
 {
-	cout << s << endl;
+	std::cout << string_in << std::endl;
 }
 
-
-int main()
+//------------------------------------------------------------------------------------------------
+// loops through the list of people supplied and calls the print function for each person
+//------------------------------------------------------------------------------------------------
+void print_list_of_people(const std::list<PERSON*> npc_people)
 {
-	
-	sf::RenderWindow window( sf::VideoMode( 1080, 720 ), "People Thing", sf::Style::Close | sf::Style::Titlebar );
-	sf::RectangleShape rect( sf::Vector2f( 100.0f, 100.0f ) );
-	sf::RectangleShape topbar( sf::Vector2f( 1080.0f, 50.0f ) );
-	topbar.setFillColor( Grey );
-	sf::RectangleShape panel( sf::Vector2f( 1080.0f, 720.0f ) );
-	panel.setFillColor( LightGrey );
-	sf::String playerInput;
-	rect.setFillColor( Colour::Yellow );
-	rect.setOrigin( 50.0f, 50.0f );
-
-	sf::Font font;
-	font.loadFromFile( "../People_Thing/Other/calibri.ttf" );
-	sf::Text search_entry;
-	search_entry.setFont( font );
-
-	search_entry.setCharacterSize( 24 ); // in pixels, not points!
-	search_entry.setFillColor( Colour::Black );
-	search_entry.setPosition( 850.0f, 10.0f );
-
-	sf::Text person_Name;
-	sf::Text person_Surname;
-	sf::Text person_Sex;
-	sf::Text person_Race;
-	sf::Text person_Class;
-	sf::Text person_Birthday;
-
-	string str;
-	/*time_t start;
-	time(&start);
-	double total_seconds;*/
-
-//
-//#pragma region people generation
-//
-//
-//
-//	double seconds;
-//	ifstream Stream1("Names_New.txt");
-//	if (!Stream1.is_open()) {
-//		cout << "Failed to open file" << endl;
-//		return 0;
-//	}
-//
-//	// LIST CONTAINS 61797 ENTRIES
-//	static const size_t mnames_size = 26756, fnames_size = 35041, snames_size = 14675;
-//	static string* Mnames = new string[mnames_size];
-//	static string* Fnames = new string[fnames_size];
-//	static string* Snames = new string[snames_size];
-//	string sex, FirstForename, Surname;
-//	string line;
-//
-//	int fname_counter = 0, mname_counter = 0;
-//
-//
-//	while (getline(Stream1, line)) {
-//		stringstream ss(line);
-//		getline(ss, sex, ',');
-//		getline(ss, FirstForename, ',');
-//
-//		if (sex == "B")
-//		{
-//			Mnames[mname_counter] = FirstForename;
-//			mname_counter++;
-//		}
-//		else
-//		{
-//			Fnames[fname_counter] = FirstForename;
-//			fname_counter++;
-//		}
-//
-//	}
-//	Stream1.close();
-//	cout << "Finished Names CSV" << endl << endl;
-//
-//	ifstream Stream2("Surnames.txt");
-//	if (!Stream2.is_open()) {
-//		cout << "Failed to open file" << endl;
-//		return 0;
-//	}
-//
-//
-//	mname_counter = 0;
-//	while (getline(Stream2, line)) {
-//		stringstream ss(line);
-//		getline(ss, Surname, ',');
-//		Snames[mname_counter] = Surname;
-//		mname_counter++;
-//
-//	}
-//	Stream2.close();
-//	cout << "Finished Surnames CSV" << endl << endl;
-//
-//
-//	static list<PERSON*> People;
-//
-//	srand(time(0));
-//
-//	time_t now;
-//	time(&now);
-//
-//	cout << "Starting People Generation" << endl << endl;
-//	for (int i = 0; i != 1500; i++)
-//	{
-//		People.push_back(generate_random_person(Mnames, Fnames, Snames));
-//	}
-//
-//
-//	seconds = difftime(time(0), now);
-//
-//	PERSON* Isaac = new PERSON("Isaac", "Simmons", Male, Orc, character_class::Darkknight, April, 1996, 26);
-//	PERSON* Terri = new PERSON("Terri", "Gardner", Female, Elf, character_class::Beastmaster, January, 1996, 14);
-//	People.push_back(Isaac);
-//	People.push_back(Terri);
-//
-//
-//	int i = 1;
-//	for (list<PERSON*>::iterator it = People.begin(); it != People.end(); it++)
-//	{
-//		(*it)->print_info();
-//		cout << " AGE    : " + to_string((*it)->get_age(world_time->get_day(), world_time->get_month(), world_time->get_year())) << endl;
-//		i++;
-//	}
-//
-//	total_seconds = difftime(time(0), start);
-//
-//	cout << endl << endl << "TODAY'S DATE: " << world_time->get_date() << endl;
-//	cout << "Finished People Generation in " << seconds << " seconds" << endl;
-//
-//#pragma endregion people generation
-//
-//
-//	
-//	total_seconds = difftime(time(0), start);
-//	cout << endl << "Finished Generation & Printing in " << total_seconds << " seconds " << endl << endl;
-
-	
-
-	string choice;
-	bool searching_people = false;
-	string srch = "Search";
-	BUTTON search( srch,75.0f,25.0f, 400.0f, 200.0f,Colour::Yellow);
-	BUTTON test( "test", 175.0f, 125.0f, 100.0f, 100.0f, Colour::Blue );
-	sf::Text button_lable = search.get_lable();
-	sf::Text button_lable2 = test.get_lable();
-	button_lable.setFont( font );
-	button_lable2.setFont( font );
-	sf::RectangleShape button_rect = search.get_rect();
-	sf::RectangleShape button_rect2 = test.get_rect();
-
-	while ( window.isOpen() )
+	for ( const auto person : npc_people )
 	{
-		sf::Event evnt;
-		while ( window.pollEvent( evnt ) )
+		person->print_info();
+	}
+}
+
+//------------------------------------------------------------------------------------------------
+// takes in the three lists for female,male and sur names, and fills them using the CSV files
+//------------------------------------------------------------------------------------------------
+bool fill_name_lists( string*& male_names, string*& female_names, string*& surnames )
+{
+	// HARRY
+	// I cant be assed to explain how this works fully
+	// But basically it reads in the .txt files and puts the contents into the three lists provided
+
+	std::ifstream names_stream("Names_New.txt");
+	std::ifstream surnames_stream("Surnames.txt");
+	if (!names_stream.is_open() || !surnames_stream.is_open())
+	{
+		std::cout << "Failed to open files" << std::endl;
+	}
+	else
+	{
+		// dont ask me how i know these sizes, past life isaac figured them out
+		static const size_t mnames_size = 26756, fnames_size = 35041, snames_size = 14675;
+		male_names = new string[mnames_size];
+		female_names = new string[fnames_size];
+		surnames = new string[snames_size];
+
+		string string_in, line;
+		uint16_t female_name_count = 0, male_name_count = 0;
+
+		while (std::getline(names_stream, line) ) 
 		{
-			if ( evnt.type == sf::Event::Closed )
-			{
-				window.close();
-				return 0;
-			}
-			
-			if ( evnt.type == sf::Event::Resized )
-			{
-				cout << "Window width" << evnt.size.width << "Window height" << evnt.size.height << endl;
-			}
+			std::stringstream ss( line );
 
-			if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Enter ) )
+			// First value in the CSV file "Names_New.txt" is the sex and is "B" for boy  and "G" for girl
+			std::getline(ss, string_in, ',');
+			if ( string_in == "B" )
 			{
-				if ( !str.empty() )
-				{
-					//find_person( People, str );
-				}
-				str.clear();
-				search_entry.setString( str );
+				//Second value is the forename of the person
+				std::getline(ss, string_in, ',');
+
+				male_names[male_name_count] = string_in;
+				++male_name_count;
 			}
-
-			if ( evnt.type == sf::Event::TextEntered )
+			else
 			{
-				if ( evnt.text.unicode == '\b' )
-				{
-					if ( !str.empty() )
-					{
-						str.erase( str.size() - 1, 1 );
-					}
+				std::getline(ss, string_in, ',');
 
-					search_entry.setString( str );
-				}
-				else if ( evnt.text.unicode < 128 && evnt.text.unicode != '\r' )
-				{
-					str += evnt.text.unicode;
-					search_entry.setString( str );
-				}
+				female_names[female_name_count] = string_in;
+				++female_name_count;
 			}
 		}
+		names_stream.close();
+		std::cout << std::endl;
+		std::cout << "Finished reading forenames CSV" << std::endl << std::endl;
+				
+		female_name_count = 0;
+		while (std::getline(surnames_stream, line) ) 
+		{
+			std::stringstream ss( line );
 
-		window.clear();
-		window.draw( panel );
-		window.draw( topbar );
-		window.draw( rect );
-		window.draw( search_entry );
-		window.draw( button_rect );
-		window.draw( button_lable );
-		window.draw( button_rect2 );
-		window.draw( button_lable2 );
+			std::getline(ss, string_in, ',');
+			surnames[female_name_count] = string_in;
+			++female_name_count;		
+		}
+		surnames_stream.close();
 
-		window.display();
+		std::cout << "Finished reading surnames CSV" << std::endl << std::endl;
+		return true;
 	}
 
-	/*while ( choice == "Y" || choice == "y" )
-	{
-		find_person( People , "isaac" );
-		cout << "Do you wish to search for another person? Y or N" << endl;
-		cin >> choice;
-		cout << endl;
-	}*/
+	return false;
+}
 
-	
+//------------------------------------------------------------------------------------------------
+// The execution of this program begins and ends inside the main function
+//------------------------------------------------------------------------------------------------
+int main()
+{
+	print("Sup harry, use this function to print text to the console window easily!");
+
+	string* male_names = nullptr;
+	string* female_names = nullptr;
+	string* surnames = nullptr;
+
+	// HARRY
+	// This function uses the text files i found to fill up some lists with names for males, females and surnames.
+	// If this fails then we just end the program early because something fucked up
+	if( fill_name_lists(male_names, female_names, surnames) )
+	{
+		srand((unsigned int)time(NULL));
+
+		if (is_harry_coding)
+		{
+			bool finished = false;
+			while (!finished)
+			{
+				int32_t choice = 0;
+				print("Enter Number of DND NPCs to generate: ");
+
+				// HARRY
+				// std::cin reads the next thing entered. So if typing "carrot" it will read that in after pressing the enter key and assign it to the value of choice!
+				// However this will only work properly if a number is entered because choice is a integer variable. So... dont enter a word?
+				std::cin >> choice;
+				print(std::to_string(choice) + " Selected");
+
+				// HARRY
+				//this creates a list of people and then adds a person to the list each loop until we have created the number specified by the choice variable.
+				std::list<PERSON*> npc_people;
+				for (int32_t counter = 0; counter <= choice; counter++)
+				{
+					npc_people.push_back(PERSON::generate_random_person(male_names, female_names, surnames));
+				}
+
+				print_list_of_people(npc_people);
+
+				finished = true;
+
+				//TODO Isaac - think of (and implement or help harry to implement) a good way to generate multiple races
+				// for example i want 2 dwarves , 1 half orc and 3 random races - we need a nice way to handle this kind of request
+			}
+		}
+		else
+		{
+			//TODO Isaac - start SFML ui stuff
+		}
+
+		// return 0 ends the program
+		return 0;
+	}
+	else
+	{
+		return 0;
+	}
 }
 
 

@@ -2,6 +2,11 @@
 #include "..\Headers\typedefs.h"
 #include "../Headers/fuzzy_search.h"
 
+//------------------------------------------------------------------------------------------------------------------------
+// Crazy function I copy pasted with minimal adjustments to help with fuzzy searching a list of names
+// Credit goes to 
+// https://code.michu-it.com/michael/programming-examples/src/commit/b880c3ccdee99efd2f5d2531230c4a0bb2e7f152/c++/11_Sets_&_Strings/C++%20Program%20to%20Implement%20Levenshtein%20Distance%20Computing%20Algorithm.cpp
+//------------------------------------------------------------------------------------------------------------------------
 bool levenshtein_distance( const std::string string1, const std::string string2 )
 {
 	int d[100][100];
@@ -40,7 +45,6 @@ bool levenshtein_distance( const std::string string1, const std::string string2 
 			d[i][j] = MIN( temp, (d[i - 1][j - 1] + tracker) );
 		}
 	}
-	//printf("the Levinstein distance is %d\n", d[n][m]);
 
 	if ( d[n][m] <= 2 )
 	{

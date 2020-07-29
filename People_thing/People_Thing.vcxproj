@@ -169,7 +169,6 @@
     <ClInclude Include="Headers\dice_functions.h" />
     <ClInclude Include="Headers\fuzzy_search.h" />
     <ClInclude Include="Headers\person.h" />
-    <ClInclude Include="Headers\time.h" />
     <ClInclude Include="Headers\typedefs.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Sources\district.h" />
@@ -191,7 +190,6 @@
     <ClCompile Include="Sources\dice_functions.cpp" />
     <ClCompile Include="Sources\fuzzy_search.cpp" />
     <ClCompile Include="Sources\person.cpp" />
-    <ClCompile Include="Sources\time.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
