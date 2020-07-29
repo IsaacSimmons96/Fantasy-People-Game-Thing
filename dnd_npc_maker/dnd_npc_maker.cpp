@@ -1,4 +1,4 @@
-// People_Thing.cpp : This file contains the 'main' function. Program execution begins and ends there.
+// dnd_npc_maker.cpp : This file contains the 'main' function. Program execution begins and ends there.
 
 #include "pch.h"
 #include <SFML\Graphics.hpp>
@@ -7,8 +7,8 @@
 #include <sstream>
 #include <fstream>
 #include <windows.h>
-#include "..\People_thing\Headers\typedefs.h"
-#include "..\People_Thing\Headers\person.h"
+#include "..\dnd_npc_maker\Headers\typedefs.h"
+#include "..\dnd_npc_maker\Headers\person.h"
 
 // HARRY
 // Keep this as true for your build harry :)
@@ -138,7 +138,7 @@ int main()
 				// HARRY
 				//this creates a list of people and then adds a person to the list each loop until we have created the number specified by the choice variable.
 				std::list<PERSON*> npc_people;
-				for (int32_t counter = 0; counter <= choice; counter++)
+				for (int32_t counter = 0; counter < choice; counter++)
 				{
 					npc_people.push_back(PERSON::generate_random_person(male_names, female_names, surnames));
 				}
