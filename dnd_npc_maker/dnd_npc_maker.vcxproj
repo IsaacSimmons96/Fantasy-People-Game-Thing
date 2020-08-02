@@ -172,7 +172,9 @@
     <ClInclude Include="Headers\person.h" />
     <ClInclude Include="Headers\typedefs.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Headers\sfml_typedefs.h" />
     <ClInclude Include="Sources\district.h" />
+    <ClInclude Include="Headers\ui_object.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -191,6 +193,7 @@
     <ClCompile Include="Sources\dice_functions.cpp" />
     <ClCompile Include="Sources\fuzzy_search.cpp" />
     <ClCompile Include="Sources\person.cpp" />
+    <ClCompile Include="Sources\ui_object.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

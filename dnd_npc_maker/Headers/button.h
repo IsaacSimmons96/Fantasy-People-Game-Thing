@@ -1,34 +1,27 @@
 #pragma once
-#include <SFML\Graphics.hpp>
 #include <math.h>
-#include <string.>
+#include <string.h>
+#include "..\Headers\ui_object.h"
 
-typedef sf::Color Colour;
-
-
-class BUTTON
+class BUTTON : public UI_OBJECT
 {
-
-	typedef void( *callback_function )(std::string);
-
 public:
-	BUTTON( std::string label, float width, float height, float Xpos, float Ypos, const Colour col );
-	~BUTTON();
+	BUTTON(const std::string text, const float width, const float height, const Colour col = Colour::White);
 
-	
+	void set_position(const float &x, const float &y) override;
+	void set_font( sf::Font &font);
 
-	void set_on_click_func( callback_function function_ptr );
 	void on_click();
-	void draw_button( sf::RenderWindow &wind );
+	void draw(sf::RenderWindow &window) override;
 
-	sf::Text get_lable();
+	float get_centre_x() const override;
+	float get_centre_y() const override;
 
-	sf::RectangleShape get_rect();
-
+	void set_colour(Colour colour_in) override;
+	void set_secondary_colour(Colour colour_in) override;
 
 private:
-	callback_function on_click_func;
-	sf::Text button_lable;
-	sf::RectangleShape rectangle;
+	sf::Text m_button_text;
+	sf::RectangleShape m_button_rectangle;
 };
 

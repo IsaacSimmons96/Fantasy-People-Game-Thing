@@ -36,6 +36,12 @@
     <ClInclude Include="Headers\typedefs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Headers\sfml_typedefs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\ui_object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -54,6 +60,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="dnd_npc_maker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\ui_object.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

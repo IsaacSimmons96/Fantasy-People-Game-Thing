@@ -8,7 +8,9 @@
 #include <fstream>
 #include <windows.h>
 #include "..\dnd_npc_maker\Headers\typedefs.h"
+#include "..\dnd_npc_maker\Headers\sfml_typedefs.h"
 #include "..\dnd_npc_maker\Headers\person.h"
+#include "..\dnd_npc_maker\Headers\button.h"
 
 // HARRY
 // Keep this as true for your build harry :)
@@ -104,11 +106,23 @@ bool fill_name_lists( string*& male_names, string*& female_names, string*& surna
 }
 
 //------------------------------------------------------------------------------------------------
+void draw_ui_objects(sf::RenderWindow &window, std::list<UI_OBJECT*> &ui_objects)
+{
+	for (const auto object : ui_objects)
+	{
+		object->draw(window);
+	}
+}
+
+//------------------------------------------------------------------------------------------------
 // The execution of this program begins and ends inside the main function
 //------------------------------------------------------------------------------------------------
 int main()
 {
-	print("Sup harry, use this function to print text to the console window easily!");
+	if ( is_harry_coding )
+	{
+		print("Sup harry, use this function to print text to the console window easily!");
+	}	
 
 	string* male_names = nullptr;
 	string* female_names = nullptr;
@@ -156,7 +170,70 @@ int main()
 		}
 		else
 		{
-			//TODO Isaac - start SFML ui stuff
+			std::list<UI_OBJECT*> ui_objects;
+
+			sf::Font font;
+			//TODO Isaac - Make this file location a constant somewhere
+			font.loadFromFile("../dnd_npc_maker/Other/calibri.ttf");
+
+			//TODO Isaac make the window title a constant variable somewhere
+			sf::RenderWindow window(sf::VideoMode(1080, 720), "DND NPC Generator", sf::Style::Close | sf::Style::Titlebar);
+						
+			BUTTON* test_button = new BUTTON("Button 1", 150, 80, Colour::Yellow);
+			test_button->set_font(font);
+			test_button->set_position(static_cast<float>(window.getSize().x / 2) - test_button->get_centre_x(), static_cast<float>(window.getSize().y / 2) - test_button->get_centre_y());
+
+			BUTTON* test_button2 = new BUTTON("Button 2", 150, 80, Colour::Blue);
+			test_button2->set_font(font);
+			test_button2->set_position(static_cast<float>(window.getSize().x / 2) - test_button2->get_centre_x(), static_cast<float>(window.getSize().y / 4) - test_button2->get_centre_y());
+
+			BUTTON* test_button3 = new BUTTON("Button 3", 150, 80, Colour::Cyan);
+			test_button3->set_font(font);
+			test_button3->set_position(static_cast<float>(window.getSize().x / 2) - test_button3->get_centre_x(), static_cast<float>(window.getSize().y ) - test_button3->get_centre_y() * 6);
+
+			ui_objects.push_back(test_button);
+			ui_objects.push_back(test_button2);
+			ui_objects.push_back(test_button3);
+
+			while (window.isOpen())
+			{
+				sf::Event event;
+				while (window.pollEvent(event))
+				{
+					// check the type of the event...
+					switch (event.type)
+					{
+						case sf::Event::Closed:
+						{
+							window.close();
+							break;
+						}
+
+						case sf::Event::KeyPressed:
+						{
+							if (event.key.code == sf::Keyboard::Escape)
+							{
+								window.close();
+							}
+							break;
+						}
+					}						
+				}
+
+				window.clear(Background);
+				draw_ui_objects(window, ui_objects);
+				window.display();
+			}
+
+			//TODO Isaac - make UI_OBJECT mouse over/click/hover handling with placeholders for the events being sent to the UI_OBJECT found
+			//TODO Isaac - finish button UI class
+			//TODO Isaac - make event_handler class
+			//TODO Isaac - make way of sending events and handling them in the event_handler class
+			//TODO Isaac - make box UI class
+			//TODO Isaac - make scrolling box UI class
+			//TODO Isaac - make text box UI class
+			//TODO Isaac - make dropdown menu UI class
+			//TODO Isaac - make class called page that holds all the SFML ui and can draw everything inside it with one function
 		}
 
 		// return 0 ends the program
