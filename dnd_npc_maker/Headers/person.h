@@ -12,6 +12,7 @@ enum class GENDER : int8_t
 	NONE
 };
 
+//TODO Harry - finish the list of races in DND
 enum class RACE : int8_t 
 {
 	HUMAN,
