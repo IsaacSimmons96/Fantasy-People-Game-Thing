@@ -73,6 +73,5 @@ private:
 
 	//TODO Harry - Add a Interaction Trait variable another enum! There is a table of these inside the Dungeon Masters Guide which i can send you a screenshot off when needed!
 	// Like the hieght, we can use the book suggestion on how to decide which trait we use by rolling a dice to decide
-	// Hello ISAAC test
 };
 

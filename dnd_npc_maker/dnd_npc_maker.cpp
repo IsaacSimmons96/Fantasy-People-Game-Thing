@@ -25,7 +25,7 @@ void print( string string_in)
 //------------------------------------------------------------------------------------------------
 // loops through the list of people supplied and calls the print function for each person
 //------------------------------------------------------------------------------------------------
-void print_list_of_people(const std::list<PERSON*> npc_people)
+void print_list_of_people(const std::list<PERSON*> &npc_people)
 {
 	for ( const auto person : npc_people )
 	{
@@ -121,7 +121,8 @@ int main()
 	{
 		srand((unsigned int)time(NULL));
 
-		if (is_harry_coding)
+		// bool == true is the same as if( bool ) and bool == false is same as (!bool)
+		if ( is_harry_coding )
 		{
 			bool finished = false;
 			while (!finished)
@@ -138,6 +139,8 @@ int main()
 				// HARRY
 				//this creates a list of people and then adds a person to the list each loop until we have created the number specified by the choice variable.
 				std::list<PERSON*> npc_people;
+
+				// interger++ same as interger =+ 1
 				for (int32_t counter = 0; counter < choice; counter++)
 				{
 					npc_people.push_back(PERSON::generate_random_person(male_names, female_names, surnames));
