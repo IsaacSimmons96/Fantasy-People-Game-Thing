@@ -53,6 +53,22 @@ void BUTTON::draw( sf::RenderWindow &window )
 }
 
 //-------------------------------------------------------------
+// Returns true if the mouse is over the button 
+//-------------------------------------------------------------
+bool BUTTON::is_mouse_over(sf::RenderWindow & window)
+{
+	const float button_x_pos = m_button_rectangle.getPosition().x;
+	const float button_y_pos = m_button_rectangle.getPosition().y;
+	const float button_max_width = button_x_pos + m_button_rectangle.getLocalBounds().width;
+	const float button_max_height = button_y_pos + m_button_rectangle.getLocalBounds().height;
+
+	const float mouse_x_pos = sf::Mouse::getPosition(window).x;
+	const float mouse_y_pos = sf::Mouse::getPosition(window).y;
+
+	return mouse_x_pos < button_max_width && mouse_x_pos > button_x_pos && mouse_y_pos < button_max_height && mouse_y_pos > button_y_pos;
+}
+
+//-------------------------------------------------------------
 // Returns the centre point of the buttons width
 //-------------------------------------------------------------
 float BUTTON::get_centre_x() const

@@ -115,14 +115,61 @@ void draw_ui_objects(sf::RenderWindow &window, std::list<UI_OBJECT*> &ui_objects
 }
 
 //------------------------------------------------------------------------------------------------
+// Handles all of the mouse events
+//------------------------------------------------------------------------------------------------
+void handle_mouse_events(sf::Event &event, sf::RenderWindow &window, std::list<UI_OBJECT*> &ui_objects)
+{
+	auto get_mouse_over = [&]()
+	{
+		for (const auto object : ui_objects)
+		{
+			if (object->is_mouse_over(window))
+			{
+				return object;
+			}
+		}
+	};
+
+	auto mouse_over_object = get_mouse_over();
+	if (mouse_over_object)
+	{
+		switch (event.type)
+		{
+		case sf::Event::MouseMoved:
+		{
+			// Hover over UI_OBJECT
+			break;
+		}
+		case sf::Event::MouseButtonReleased:
+		{
+			// Click a UI_OBJECT
+			break;
+		}
+		//case sf::Event::MouseButtonPressed:
+		//{
+		//	// Hold mouse down on a UI_OBJECT
+		//	break;
+		//}
+		//case sf::Event::MouseWheelScrolled:
+		//{
+		//	// scroll the mouse wheen whilst over a UI_OBJECT
+		//	break;
+		//}
+		default:
+			break;
+		}
+	}
+}
+
+//------------------------------------------------------------------------------------------------
 // The execution of this program begins and ends inside the main function
 //------------------------------------------------------------------------------------------------
 int main()
 {
-	if ( is_harry_coding )
+	if (is_harry_coding)
 	{
 		print("Sup harry, use this function to print text to the console window easily!");
-	}	
+	}
 
 	string* male_names = nullptr;
 	string* female_names = nullptr;
@@ -131,12 +178,12 @@ int main()
 	// HARRY
 	// This function uses the text files i found to fill up some lists with names for males, females and surnames.
 	// If this fails then we just end the program early because something fucked up
-	if( fill_name_lists(male_names, female_names, surnames) )
+	if (fill_name_lists(male_names, female_names, surnames))
 	{
 		srand((unsigned int)time(NULL));
 
 		// bool == true is the same as if( bool ) and bool == false is same as (!bool)
-		if ( is_harry_coding )
+		if (is_harry_coding)
 		{
 			bool finished = false;
 			while (!finished)
@@ -178,7 +225,7 @@ int main()
 
 			//TODO Isaac make the window title a constant variable somewhere
 			sf::RenderWindow window(sf::VideoMode(1080, 720), "DND NPC Generator", sf::Style::Close | sf::Style::Titlebar);
-						
+
 			BUTTON* test_button = new BUTTON("Button 1", 150, 80, Colour::Yellow);
 			test_button->set_font(font);
 			test_button->set_position(static_cast<float>(window.getSize().x / 2) - test_button->get_centre_x(), static_cast<float>(window.getSize().y / 2) - test_button->get_centre_y());
@@ -189,7 +236,7 @@ int main()
 
 			BUTTON* test_button3 = new BUTTON("Button 3", 150, 80, Colour::Cyan);
 			test_button3->set_font(font);
-			test_button3->set_position(static_cast<float>(window.getSize().x / 2) - test_button3->get_centre_x(), static_cast<float>(window.getSize().y ) - test_button3->get_centre_y() * 6);
+			test_button3->set_position(static_cast<float>(window.getSize().x / 2) - test_button3->get_centre_x(), static_cast<float>(window.getSize().y) - test_button3->get_centre_y() * 6);
 
 			ui_objects.push_back(test_button);
 			ui_objects.push_back(test_button2);
@@ -203,21 +250,30 @@ int main()
 					// check the type of the event...
 					switch (event.type)
 					{
-						case sf::Event::Closed:
+					case sf::Event::MouseMoved:
+					case sf::Event::MouseButtonReleased:
+						//case sf::Event::MouseButtonPressed: TODO Isaac - do we need a on mouse hold event?
+						// sf::Event::MouseWheelScrolled: - commented until making a widget that needs scrolling!
+					{
+						handle_mouse_events(event, window, ui_objects);
+						break;
+					}
+
+					case sf::Event::Closed:
+					{
+						window.close();
+						break;
+					}
+
+					case sf::Event::KeyPressed:
+					{
+						if (event.key.code == sf::Keyboard::Escape)
 						{
 							window.close();
-							break;
 						}
-
-						case sf::Event::KeyPressed:
-						{
-							if (event.key.code == sf::Keyboard::Escape)
-							{
-								window.close();
-							}
-							break;
-						}
-					}						
+						break;
+					}
+					}
 				}
 
 				window.clear(Background);
@@ -244,6 +300,3 @@ int main()
 		return 0;
 	}
 }
-
-
-

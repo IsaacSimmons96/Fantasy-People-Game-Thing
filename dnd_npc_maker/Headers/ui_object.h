@@ -9,12 +9,12 @@ class UI_OBJECT
 {
 public:
 	virtual void	draw(sf::RenderWindow &window) = 0;
-	
-	// PURE FUNCTIONS
+	virtual bool	is_mouse_over(sf::RenderWindow &window) = 0;
+
 	virtual float	get_centre_x() const = 0;
 	virtual float	get_centre_y() const = 0;
-	virtual void	set_position(const float &x, const float &y) = 0;
 
+	virtual void	set_position(const float &x, const float &y) = 0;
 	virtual void	set_colour				(Colour colour_in);
 	virtual void	set_secondary_colour	(Colour colour_in);
 
