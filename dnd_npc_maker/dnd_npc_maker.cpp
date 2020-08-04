@@ -19,7 +19,7 @@ constexpr bool is_harry_coding = true;
 //------------------------------------------------------------------------------------------------
 // simple function to sd::cout the supplied string
 //------------------------------------------------------------------------------------------------
-void print( string string_in)
+void print(string string_in)
 {
 	std::cout << string_in << std::endl;
 }
@@ -29,7 +29,7 @@ void print( string string_in)
 //------------------------------------------------------------------------------------------------
 void print_list_of_people(const std::list<PERSON*> &npc_people)
 {
-	for ( const auto person : npc_people )
+	for (const auto person : npc_people)
 	{
 		person->print_info();
 	}
@@ -38,7 +38,7 @@ void print_list_of_people(const std::list<PERSON*> &npc_people)
 //------------------------------------------------------------------------------------------------
 // takes in the three lists for female,male and sur names, and fills them using the CSV files
 //------------------------------------------------------------------------------------------------
-bool fill_name_lists( string*& male_names, string*& female_names, string*& surnames )
+bool fill_name_lists(string*& male_names, string*& female_names, string*& surnames)
 {
 	// HARRY
 	// I cant be assed to explain how this works fully
@@ -61,13 +61,13 @@ bool fill_name_lists( string*& male_names, string*& female_names, string*& surna
 		string string_in, line;
 		uint16_t female_name_count = 0, male_name_count = 0;
 
-		while (std::getline(names_stream, line) ) 
+		while (std::getline(names_stream, line))
 		{
-			std::stringstream ss( line );
+			std::stringstream ss(line);
 
 			// First value in the CSV file "Names_New.txt" is the sex and is "B" for boy  and "G" for girl
 			std::getline(ss, string_in, ',');
-			if ( string_in == "B" )
+			if (string_in == "B")
 			{
 				//Second value is the forename of the person
 				std::getline(ss, string_in, ',');
@@ -86,15 +86,15 @@ bool fill_name_lists( string*& male_names, string*& female_names, string*& surna
 		names_stream.close();
 		std::cout << std::endl;
 		std::cout << "Finished reading forenames CSV" << std::endl << std::endl;
-				
+
 		female_name_count = 0;
-		while (std::getline(surnames_stream, line) ) 
+		while (std::getline(surnames_stream, line))
 		{
-			std::stringstream ss( line );
+			std::stringstream ss(line);
 
 			std::getline(ss, string_in, ',');
 			surnames[female_name_count] = string_in;
-			++female_name_count;		
+			++female_name_count;
 		}
 		surnames_stream.close();
 
@@ -117,39 +117,65 @@ void draw_ui_objects(sf::RenderWindow &window, std::list<UI_OBJECT*> &ui_objects
 //------------------------------------------------------------------------------------------------
 // Handles all of the mouse events
 //------------------------------------------------------------------------------------------------
-void handle_mouse_events(sf::Event &event, sf::RenderWindow &window, std::list<UI_OBJECT*> &ui_objects)
+void handle_mouse_events(sf::Event &event, sf::RenderWindow &window, std::list<UI_OBJECT*> &ui_objects, UI_OBJECT*& old_mouse_over)
 {
 	auto get_mouse_over = [&]()
 	{
+		UI_OBJECT* object_found = nullptr;
 		for (const auto object : ui_objects)
 		{
 			if (object->is_mouse_over(window))
 			{
-				return object;
+				object_found = object;
+				break;
 			}
 		}
+
+		return object_found;
 	};
 
-	auto mouse_over_object = get_mouse_over();
-	if (mouse_over_object)
+	auto new_mouse_over = get_mouse_over();
+	switch (event.type)
 	{
-		switch (event.type)
-		{
 		case sf::Event::MouseMoved:
 		{
-			// Hover over UI_OBJECT
+			if (new_mouse_over != old_mouse_over)
+			{
+				if (new_mouse_over)
+				{
+					new_mouse_over->handle_mouse_enter();
+				}				
+
+				if (old_mouse_over)
+				{
+					// Have we been holding the mouse object? If so then we cancel the click
+					if (old_mouse_over->is_being_clicked())
+					{
+						old_mouse_over->cancel_click();
+					}
+
+					old_mouse_over->handle_mouse_leave();
+				}
+			}
+			break;
+		}
+		case sf::Event::MouseButtonPressed:
+		{
+			if (new_mouse_over)
+			{
+				new_mouse_over->handle_mouse_click(event.mouseButton.button);
+			}
 			break;
 		}
 		case sf::Event::MouseButtonReleased:
 		{
-			// Click a UI_OBJECT
+			if (new_mouse_over)
+			{
+				new_mouse_over->handle_mouse_release(event.mouseButton.button);
+			}
 			break;
 		}
-		//case sf::Event::MouseButtonPressed:
-		//{
-		//	// Hold mouse down on a UI_OBJECT
-		//	break;
-		//}
+		
 		//case sf::Event::MouseWheelScrolled:
 		//{
 		//	// scroll the mouse wheen whilst over a UI_OBJECT
@@ -157,8 +183,9 @@ void handle_mouse_events(sf::Event &event, sf::RenderWindow &window, std::list<U
 		//}
 		default:
 			break;
-		}
 	}
+
+	old_mouse_over = new_mouse_over;
 }
 
 //------------------------------------------------------------------------------------------------
@@ -218,6 +245,7 @@ int main()
 		else
 		{
 			std::list<UI_OBJECT*> ui_objects;
+			UI_OBJECT* current_mouse_over = nullptr;
 
 			sf::Font font;
 			//TODO Isaac - Make this file location a constant somewhere
@@ -252,10 +280,10 @@ int main()
 					{
 					case sf::Event::MouseMoved:
 					case sf::Event::MouseButtonReleased:
-						//case sf::Event::MouseButtonPressed: TODO Isaac - do we need a on mouse hold event?
-						// sf::Event::MouseWheelScrolled: - commented until making a widget that needs scrolling!
+					case sf::Event::MouseButtonPressed:
+					// sf::Event::MouseWheelScrolled: - commented until making a widget that needs scrolling!
 					{
-						handle_mouse_events(event, window, ui_objects);
+						handle_mouse_events(event, window, ui_objects, current_mouse_over);
 						break;
 					}
 

@@ -7,6 +7,8 @@
 BUTTON::BUTTON( const std::string text, const float width, const float height, const Colour col /*= Colour::White*/)
 {
 	m_colour = col;
+	m_hover_colour = UI_OBJECT::darken_colour(m_colour, 35);
+	m_clicked_colour = UI_OBJECT::darken_colour(m_hover_colour, 35);
 
 	m_button_rectangle.setSize( sf::Vector2f( width, height ) );
 	m_button_rectangle.setFillColor( m_colour );
@@ -15,14 +17,6 @@ BUTTON::BUTTON( const std::string text, const float width, const float height, c
 	m_button_text.setFillColor( m_secondary_colour );
 	m_button_text.setString(text);
 } 
-
-//-------------------------------------------------------------
-// Will handle what to do when clicked
-//-------------------------------------------------------------
-void BUTTON::on_click()
-{
-	//handle clicked
-}
 
 //-------------------------------------------------------------
 // Sets the position
@@ -48,6 +42,11 @@ void BUTTON::set_font(sf::Font & font)
 //-------------------------------------------------------------
 void BUTTON::draw( sf::RenderWindow &window )
 {
+	if (m_clicked && m_button_rectangle.getFillColor() != m_clicked_colour)
+	{
+		m_button_rectangle.setFillColor(m_clicked_colour);
+	}
+
 	window.draw( m_button_rectangle );
 	window.draw( m_button_text );
 }
@@ -66,6 +65,66 @@ bool BUTTON::is_mouse_over(sf::RenderWindow & window)
 	const float mouse_y_pos = sf::Mouse::getPosition(window).y;
 
 	return mouse_x_pos < button_max_width && mouse_x_pos > button_x_pos && mouse_y_pos < button_max_height && mouse_y_pos > button_y_pos;
+}
+
+//-------------------------------------------------------------
+// Handles what to do when clicked
+//-------------------------------------------------------------
+void BUTTON::handle_mouse_click(sf::Mouse::Button button_type)
+{
+	switch (button_type)
+	{
+		case sf::Mouse::Left:
+		case sf::Mouse::Middle:
+		{
+			std::cout << "held" << std::endl;
+			m_clicked = true;
+			break;
+		}
+		case sf::Mouse::Right:
+			break;
+		default:
+			break;
+	}	
+}
+
+//-------------------------------------------------------------
+// Handles what to do when the mouse is released
+//-------------------------------------------------------------
+void BUTTON::handle_mouse_release(sf::Mouse::Button button_type)
+{
+	switch (button_type)
+	{
+	case sf::Mouse::Left:
+	case sf::Mouse::Middle:
+	{
+		std::cout << "click" << std::endl;
+		m_button_rectangle.setFillColor(m_hover_colour);
+		m_clicked = false;
+		break;
+	}
+	case sf::Mouse::Right:
+		break;
+	default:
+		break;
+	}
+}
+
+
+//-------------------------------------------------------------
+// Handles what to do when the mouse enters this object
+//-------------------------------------------------------------
+void BUTTON::handle_mouse_enter()
+{
+	m_button_rectangle.setFillColor(m_hover_colour);
+}
+
+//-------------------------------------------------------------
+// Handles what to do when the mouse leaves this object
+//-------------------------------------------------------------
+void BUTTON::handle_mouse_leave()
+{
+	m_button_rectangle.setFillColor(m_colour);
 }
 
 //-------------------------------------------------------------
