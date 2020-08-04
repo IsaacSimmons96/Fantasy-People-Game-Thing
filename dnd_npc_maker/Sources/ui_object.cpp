@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "..\Headers\ui_object.h"
+#include "..\Headers\console.h"
 
 void UI_OBJECT::set_colour(Colour colour_in)
 {
@@ -9,6 +10,12 @@ void UI_OBJECT::set_colour(Colour colour_in)
 void UI_OBJECT::set_secondary_colour(Colour colour_in)
 {
 	m_secondary_colour = colour_in;
+}
+
+void UI_OBJECT::cancel_click()
+{
+	CONSOLE::print_to_console("cancelled click");
+	m_clicked = false;
 }
 
 Colour UI_OBJECT::darken_colour(Colour colour_in, uint8_t darken_value /*= 20*/)

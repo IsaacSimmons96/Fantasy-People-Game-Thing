@@ -1,10 +1,10 @@
 #include "pch.h"
 #include "..\Headers\typedefs.h"
 #include "..\Headers\person.h"
+#include "..\Headers\console.h"
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
 #include <algorithm>
-#include <iostream>
 
 // HARRY
 // This is called a constructor. Every class has a constructor, and if one isnt defined manually, then it will be generated at compile time in the background
@@ -37,10 +37,10 @@ PERSON::PERSON(const string forename, string surname, const GENDER gender, const
 //-------------------------------------------------------------
 void PERSON::print_info()
 {
-	std::cout << std::endl << " NAME   : " << m_forename << " " << m_surname 
-		<< std::endl << " GENDER : " << get_gender_string(m_gender) 
-		<< std::endl << " RACE   : " << get_racial_string(m_race) 
-		<< std::endl;
+	CONSOLE::print_to_console("");
+	CONSOLE::print_to_console(" NAME   : " + m_forename + " " + m_surname);
+	CONSOLE::print_to_console(" GENDER : " + get_gender_string(m_gender));
+	CONSOLE::print_to_console(" RACE   : " + get_racial_string(m_race));
 
 	//TODO Harry - for each varible you add, you should add it to this print function so you can test its working correctly! :)
 	//Give us a shout if you need help with printing integers or other types of variables
@@ -77,6 +77,10 @@ string PERSON::get_gender_string(GENDER gender)
 		{
 			return "None";
 		}
+		default:
+		{
+			return "Gender Not Implemented";
+		}
 	}
 }
 
@@ -100,6 +104,10 @@ string PERSON::get_racial_string(RACE race)
 		case RACE::HALF_ORC:
 		{
 			return "Half Orc";
+		}
+		default:
+		{
+			return "Race Not Implemented";
 		}
 	}
 }

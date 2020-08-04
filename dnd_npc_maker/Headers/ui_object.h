@@ -1,6 +1,5 @@
 #pragma once
 #include "sfml_typedefs.h"
-#include <iostream>
 
 //-------------------------------------------------------------------------------------------
 // UI_OBJECT is the base class for all ui classes in this program!
@@ -19,7 +18,7 @@ public:
 	virtual void	set_colour				(Colour colour_in);
 	virtual void	set_secondary_colour	(Colour colour_in);
 
-	void			cancel_click() { m_clicked = false; std::cout << "click cancelled" << std::endl; };
+	void			cancel_click();
 	virtual bool	is_being_clicked() { return m_clicked; };
 
 	virtual void	handle_mouse_click(sf::Mouse::Button button_type) = 0;

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "..\Headers\button.h"
+#include "..\Headers\console.h"
 
 //-------------------------------------------------------------
 // Constructor
@@ -61,8 +62,8 @@ bool BUTTON::is_mouse_over(sf::RenderWindow & window)
 	const float button_max_width = button_x_pos + m_button_rectangle.getLocalBounds().width;
 	const float button_max_height = button_y_pos + m_button_rectangle.getLocalBounds().height;
 
-	const float mouse_x_pos = sf::Mouse::getPosition(window).x;
-	const float mouse_y_pos = sf::Mouse::getPosition(window).y;
+	const float mouse_x_pos = static_cast<float>(sf::Mouse::getPosition(window).x);
+	const float mouse_y_pos = static_cast<float>(sf::Mouse::getPosition(window).y);
 
 	return mouse_x_pos < button_max_width && mouse_x_pos > button_x_pos && mouse_y_pos < button_max_height && mouse_y_pos > button_y_pos;
 }
@@ -77,7 +78,7 @@ void BUTTON::handle_mouse_click(sf::Mouse::Button button_type)
 		case sf::Mouse::Left:
 		case sf::Mouse::Middle:
 		{
-			std::cout << "held" << std::endl;
+			CONSOLE::print_to_console("held");
 			m_clicked = true;
 			break;
 		}
@@ -98,7 +99,7 @@ void BUTTON::handle_mouse_release(sf::Mouse::Button button_type)
 	case sf::Mouse::Left:
 	case sf::Mouse::Middle:
 	{
-		std::cout << "click" << std::endl;
+		CONSOLE::print_to_console("click");
 		m_button_rectangle.setFillColor(m_hover_colour);
 		m_clicked = false;
 		break;

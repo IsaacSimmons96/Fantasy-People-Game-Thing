@@ -2,8 +2,8 @@
 
 #include "pch.h"
 #include <SFML\Graphics.hpp>
-#include <iostream>
 #include <string>
+#include <iostream>
 #include <sstream>
 #include <fstream>
 #include <windows.h>
@@ -11,29 +11,11 @@
 #include "..\dnd_npc_maker\Headers\sfml_typedefs.h"
 #include "..\dnd_npc_maker\Headers\person.h"
 #include "..\dnd_npc_maker\Headers\button.h"
+#include "..\dnd_npc_maker\Headers\console.h"
 
 // HARRY
 // Keep this as true for your build harry :)
 constexpr bool is_harry_coding = true;
-
-//------------------------------------------------------------------------------------------------
-// simple function to sd::cout the supplied string
-//------------------------------------------------------------------------------------------------
-void print(string string_in)
-{
-	std::cout << string_in << std::endl;
-}
-
-//------------------------------------------------------------------------------------------------
-// loops through the list of people supplied and calls the print function for each person
-//------------------------------------------------------------------------------------------------
-void print_list_of_people(const std::list<PERSON*> &npc_people)
-{
-	for (const auto person : npc_people)
-	{
-		person->print_info();
-	}
-}
 
 //------------------------------------------------------------------------------------------------
 // takes in the three lists for female,male and sur names, and fills them using the CSV files
@@ -48,7 +30,7 @@ bool fill_name_lists(string*& male_names, string*& female_names, string*& surnam
 	std::ifstream surnames_stream("Surnames.txt");
 	if (!names_stream.is_open() || !surnames_stream.is_open())
 	{
-		std::cout << "Failed to open files" << std::endl;
+		CONSOLE::print_to_console("Failed to open files");
 	}
 	else
 	{
@@ -84,8 +66,9 @@ bool fill_name_lists(string*& male_names, string*& female_names, string*& surnam
 			}
 		}
 		names_stream.close();
-		std::cout << std::endl;
-		std::cout << "Finished reading forenames CSV" << std::endl << std::endl;
+
+		CONSOLE::print_to_console();
+		CONSOLE::print_to_console("Finished reading forenames CSV");
 
 		female_name_count = 0;
 		while (std::getline(surnames_stream, line))
@@ -98,7 +81,8 @@ bool fill_name_lists(string*& male_names, string*& female_names, string*& surnam
 		}
 		surnames_stream.close();
 
-		std::cout << "Finished reading surnames CSV" << std::endl << std::endl;
+		CONSOLE::print_to_console();
+		CONSOLE::print_to_console("Finished reading surnames CSV");
 		return true;
 	}
 
@@ -195,7 +179,7 @@ int main()
 {
 	if (is_harry_coding)
 	{
-		print("Sup harry, use this function to print text to the console window easily!");
+		CONSOLE::print_to_console("Sup harry, use this function to print text to the console window easily!");
 	}
 
 	string* male_names = nullptr;
@@ -215,14 +199,15 @@ int main()
 			bool finished = false;
 			while (!finished)
 			{
-				int32_t choice = 0;
-				print("Enter Number of DND NPCs to generate: ");
+				CONSOLE::print_to_console("\nEnter Number of DND NPCs to generate: ");
 
 				// HARRY
 				// std::cin reads the next thing entered. So if typing "carrot" it will read that in after pressing the enter key and assign it to the value of choice!
 				// However this will only work properly if a number is entered because choice is a integer variable. So... dont enter a word?
+				// note - ive since moved all std::cout functionality into the CONSOLE class! See there for useage :)
+				int32_t choice = 0;
 				std::cin >> choice;
-				print(std::to_string(choice) + " Selected");
+				CONSOLE::print_to_console(std::to_string(choice) + " Selected");
 
 				// HARRY
 				//this creates a list of people and then adds a person to the list each loop until we have created the number specified by the choice variable.
@@ -234,7 +219,7 @@ int main()
 					npc_people.push_back(PERSON::generate_random_person(male_names, female_names, surnames));
 				}
 
-				print_list_of_people(npc_people);
+				CONSOLE::print_list_of_people(npc_people);
 
 				finished = true;
 
