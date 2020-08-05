@@ -8,14 +8,13 @@
 #include <fstream>
 #include <windows.h>
 #include "..\dnd_npc_maker\Headers\typedefs.h"
-#include "..\dnd_npc_maker\Headers\sfml_typedefs.h"
 #include "..\dnd_npc_maker\Headers\person.h"
-#include "..\dnd_npc_maker\Headers\button.h"
 #include "..\dnd_npc_maker\Headers\console.h"
+#include "..\dnd_npc_maker\User Interface\button.h"
 
 // HARRY
 // Keep this as true for your build harry :)
-constexpr bool is_harry_coding = true;
+constexpr bool is_harry_coding = false;
 
 //------------------------------------------------------------------------------------------------
 // takes in the three lists for female,male and sur names, and fills them using the CSV files

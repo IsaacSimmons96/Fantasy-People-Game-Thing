@@ -1,7 +1,7 @@
 #pragma once
 #include <math.h>
 #include <string.h>
-#include "..\Headers\ui_object.h"
+#include "ui_object.h"
 
 class BUTTON : public UI_OBJECT
 {

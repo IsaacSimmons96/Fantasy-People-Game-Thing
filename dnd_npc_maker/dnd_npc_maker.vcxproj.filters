@@ -27,22 +27,22 @@
     <ClInclude Include="Headers\fuzzy_search.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\button.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Headers\dice_functions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Headers\typedefs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\sfml_typedefs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\ui_object.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Headers\console.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="User Interface\button.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="User Interface\sfml_typedefs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="User Interface\ui_object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -56,19 +56,19 @@
     <ClCompile Include="Sources\fuzzy_search.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\button.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Sources\dice_functions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="dnd_npc_maker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\ui_object.cpp">
+    <ClCompile Include="Sources\console.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\console.cpp">
+    <ClCompile Include="User Interface\button.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="User Interface\ui_object.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

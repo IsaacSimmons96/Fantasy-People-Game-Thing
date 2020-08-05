@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "..\Headers\ui_object.h"
+#include "ui_object.h"
 #include "..\Headers\console.h"
 
 void UI_OBJECT::set_colour(Colour colour_in)
