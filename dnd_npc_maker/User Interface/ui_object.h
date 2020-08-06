@@ -8,8 +8,8 @@
 class UI_OBJECT
 {
 public:
-	virtual void	draw(sf::RenderWindow &window) = 0;
-	virtual bool	is_mouse_over(sf::RenderWindow &window) = 0;
+	virtual UI_OBJECT*	get_if_mouse_over(sf::RenderWindow &window) = 0;
+	virtual void		draw(sf::RenderWindow &window) = 0;
 
 	virtual float	get_centre_x() const = 0;
 	virtual float	get_centre_y() const = 0;
@@ -18,8 +18,9 @@ public:
 	virtual void	set_colour				(Colour colour_in);
 	virtual void	set_secondary_colour	(Colour colour_in);
 
-	void			cancel_click();
-	virtual bool	is_being_clicked() { return m_clicked; };
+	virtual void	cancel();
+	virtual bool	is_being_clicked()		{ return m_clicked; };
+	bool			is_awaiting_action()	{ return m_needs_action; };
 
 	virtual void	handle_mouse_click(sf::Mouse::Button button_type) = 0;
 	virtual void	handle_mouse_release(sf::Mouse::Button button_type) = 0;
@@ -35,7 +36,8 @@ public:
 	static Colour lighten_colour(Colour colour_in, uint8_t lighten_value = 20);
 
 protected:
-	bool m_clicked{ false };
+	bool m_clicked		{ false };
+	bool m_needs_action	{ false };
 
 	Colour m_colour = Colour::White;
 	Colour m_hover_colour = Colour(169, 169, 169);

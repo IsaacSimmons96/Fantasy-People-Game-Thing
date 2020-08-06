@@ -5,7 +5,7 @@
 #include "fuzzy_search.h"
 #include "..\Headers\typedefs.h"
 
-enum class GENDER : int8_t
+enum class GENDER : uint8_t
 {
 	MALE,
 	FEMALE,
@@ -13,7 +13,7 @@ enum class GENDER : int8_t
 };
 
 //TODO Harry - finish the list of races in DND
-enum class RACE : int8_t 
+enum class RACE : uint8_t 
 {
 	HUMAN,
 	ELF,

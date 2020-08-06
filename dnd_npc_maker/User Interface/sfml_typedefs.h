@@ -3,4 +3,9 @@
 
 typedef sf::Color Colour;
 
-static const Colour Background(249, 249, 231);
+namespace Custom_Colour
+{
+	static const Colour Background(249, 249, 231);
+	static const Colour Skype(0, 175, 240);
+}
+

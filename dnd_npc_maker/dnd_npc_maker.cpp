@@ -10,11 +10,11 @@
 #include "..\dnd_npc_maker\Headers\typedefs.h"
 #include "..\dnd_npc_maker\Headers\person.h"
 #include "..\dnd_npc_maker\Headers\console.h"
-#include "..\dnd_npc_maker\User Interface\button.h"
+#include "..\dnd_npc_maker\User Interface\menu_button.h"
 
 // HARRY
 // Keep this as true for your build harry :)
-constexpr bool is_harry_coding = false;
+constexpr bool is_harry_coding = true;
 
 //------------------------------------------------------------------------------------------------
 // takes in the three lists for female,male and sur names, and fills them using the CSV files
@@ -100,16 +100,17 @@ void draw_ui_objects(sf::RenderWindow &window, std::list<UI_OBJECT*> &ui_objects
 //------------------------------------------------------------------------------------------------
 // Handles all of the mouse events
 //------------------------------------------------------------------------------------------------
-void handle_mouse_events(sf::Event &event, sf::RenderWindow &window, std::list<UI_OBJECT*> &ui_objects, UI_OBJECT*& old_mouse_over)
+void handle_mouse_events(sf::Event &event, sf::RenderWindow &window, std::list<UI_OBJECT*> &ui_objects, UI_OBJECT*& old_mouse_over, UI_OBJECT*& action_object)
 {
 	auto get_mouse_over = [&]()
 	{
 		UI_OBJECT* object_found = nullptr;
 		for (const auto object : ui_objects)
 		{
-			if (object->is_mouse_over(window))
+			object_found = object->get_if_mouse_over(window);
+
+			if (object_found)
 			{
-				object_found = object;
 				break;
 			}
 		}
@@ -134,7 +135,7 @@ void handle_mouse_events(sf::Event &event, sf::RenderWindow &window, std::list<U
 					// Have we been holding the mouse object? If so then we cancel the click
 					if (old_mouse_over->is_being_clicked())
 					{
-						old_mouse_over->cancel_click();
+						old_mouse_over->cancel();
 					}
 
 					old_mouse_over->handle_mouse_leave();
@@ -152,9 +153,23 @@ void handle_mouse_events(sf::Event &event, sf::RenderWindow &window, std::list<U
 		}
 		case sf::Event::MouseButtonReleased:
 		{
+			if (action_object)
+			{
+				if (new_mouse_over != action_object && action_object->is_awaiting_action())
+				{
+					action_object->cancel();
+				}
+
+				action_object = nullptr;
+			}
+
 			if (new_mouse_over)
 			{
 				new_mouse_over->handle_mouse_release(event.mouseButton.button);
+				if (new_mouse_over->is_awaiting_action())
+				{
+					action_object = new_mouse_over;
+				}
 			}
 			break;
 		}
@@ -230,10 +245,11 @@ int main()
 		{
 			std::list<UI_OBJECT*> ui_objects;
 			UI_OBJECT* current_mouse_over = nullptr;
+			UI_OBJECT* object_needing_action = nullptr;
 
-			sf::Font font;
+			sf::Font* font = new sf::Font();
 			//TODO Isaac - Make this file location a constant somewhere
-			font.loadFromFile("../dnd_npc_maker/Other/calibri.ttf");
+			font->loadFromFile("../dnd_npc_maker/User Interface/Fonts/8-BIT WONDER.ttf");
 
 			//TODO Isaac make the window title a constant variable somewhere
 			sf::RenderWindow window(sf::VideoMode(1080, 720), "DND NPC Generator", sf::Style::Close | sf::Style::Titlebar);
@@ -250,9 +266,21 @@ int main()
 			test_button3->set_font(font);
 			test_button3->set_position(static_cast<float>(window.getSize().x / 2) - test_button3->get_centre_x(), static_cast<float>(window.getSize().y) - test_button3->get_centre_y() * 6);
 
+			MENU_BUTTON* menu_button = new MENU_BUTTON( 150, 80, Custom_Colour::Skype);
+			menu_button->set_font(font);
+			menu_button->set_position(static_cast<float>(window.getSize().x / 4) - test_button3->get_centre_x(), static_cast<float>(window.getSize().y / 4) - test_button2->get_centre_y());
+
+			std::vector<std::pair<std::string, uint32_t>> race_list;
+			for (uint8_t race_value = 0; race_value != static_cast<uint8_t>(RACE::END_OF_RACES); ++race_value)
+			{
+				race_list.push_back(std::make_pair(PERSON::get_racial_string(static_cast<RACE>(race_value)), race_value));
+			}
+			menu_button->set_values(race_list);
+
 			ui_objects.push_back(test_button);
 			ui_objects.push_back(test_button2);
 			ui_objects.push_back(test_button3);
+			ui_objects.push_back(menu_button);
 
 			while (window.isOpen())
 			{
@@ -267,7 +295,7 @@ int main()
 					case sf::Event::MouseButtonPressed:
 					// sf::Event::MouseWheelScrolled: - commented until making a widget that needs scrolling!
 					{
-						handle_mouse_events(event, window, ui_objects, current_mouse_over);
+						handle_mouse_events(event, window, ui_objects, current_mouse_over, object_needing_action);
 						break;
 					}
 
@@ -288,7 +316,7 @@ int main()
 					}
 				}
 
-				window.clear(Background);
+				window.clear(Custom_Colour::Background);
 				draw_ui_objects(window, ui_objects);
 				window.display();
 			}

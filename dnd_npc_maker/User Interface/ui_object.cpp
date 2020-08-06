@@ -12,7 +12,7 @@ void UI_OBJECT::set_secondary_colour(Colour colour_in)
 	m_secondary_colour = colour_in;
 }
 
-void UI_OBJECT::cancel_click()
+void UI_OBJECT::cancel()
 {
 	CONSOLE::print_to_console("cancelled click");
 	m_clicked = false;
@@ -39,7 +39,7 @@ Colour UI_OBJECT::lighten_colour(Colour colour_in, uint8_t lighten_value /*= 20*
 {
 	auto if_doable_lighten_value = [&](uint8_t &value_to_change)
 	{
-		if ((value_to_change + lighten_value) <= 256)
+		if ((value_to_change + static_cast<uint16_t>(lighten_value)) <= 256)
 		{
 			value_to_change += lighten_value;
 		}

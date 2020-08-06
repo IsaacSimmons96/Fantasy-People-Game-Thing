@@ -45,6 +45,9 @@
     <ClInclude Include="User Interface\ui_object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="User Interface\menu_button.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -69,6 +72,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="User Interface\ui_object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="User Interface\menu_button.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
