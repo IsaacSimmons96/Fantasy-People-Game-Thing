@@ -12,6 +12,26 @@ void UI_OBJECT::set_secondary_colour(Colour colour_in)
 	m_secondary_colour = colour_in;
 }
 
+void UI_OBJECT::hide()
+{
+	m_visible = false;
+}
+
+void UI_OBJECT::show()
+{
+	m_visible = true;
+}
+
+void UI_OBJECT::set_visible(bool visibility)
+{
+	m_visible = visibility;
+}
+
+bool UI_OBJECT::is_visible()
+{
+	return m_visible;
+}
+
 void UI_OBJECT::cancel()
 {
 	CONSOLE::print_to_console("cancelled click");

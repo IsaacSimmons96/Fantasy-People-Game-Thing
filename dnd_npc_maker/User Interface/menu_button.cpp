@@ -81,9 +81,10 @@ void MENU_BUTTON::draw(sf::RenderWindow & window)
 {
 	parent::draw(window);
 	
-	if (m_needs_action)
+	if (m_needs_action && is_visible())
 	{
 		window.draw(m_menu_rectangle);
+
 		for (auto object : m_menu_buttons)
 		{
 			if (object)
@@ -99,19 +100,24 @@ void MENU_BUTTON::draw(sf::RenderWindow & window)
 //--------------------------------------------------------------------------------
 UI_OBJECT* MENU_BUTTON::get_if_mouse_over(sf::RenderWindow& window)
 {
-	auto mouse_over = parent::get_if_mouse_over(window);
+	UI_OBJECT* mouse_over = nullptr;
 
-	if (!mouse_over)
+	if (is_visible())
 	{
-		for (auto object : m_menu_buttons)
-		{
-			if (object)
-			{
-				mouse_over = object->get_if_mouse_over(window);
+		mouse_over = parent::get_if_mouse_over(window);
 
-				if (mouse_over)
+		if (!mouse_over)
+		{
+			for (auto object : m_menu_buttons)
+			{
+				if (object)
 				{
-					break;
+					mouse_over = object->get_if_mouse_over(window);
+
+					if (mouse_over)
+					{
+						break;
+					}
 				}
 			}
 		}
@@ -245,6 +251,15 @@ void MENU_BUTTON::expand_menu()
 			++value_index;
 		}
 	}
+	else
+	{
+		for (auto button : m_menu_buttons)
+		{
+			button->show();
+		}
+	}
+
+
 
 	m_needs_action = true;
 }
@@ -259,6 +274,7 @@ void MENU_BUTTON::close_menu()
 	for (auto object : m_menu_buttons)
 	{
 		object->handle_mouse_leave();
+		object->hide();
 	}
 }
 

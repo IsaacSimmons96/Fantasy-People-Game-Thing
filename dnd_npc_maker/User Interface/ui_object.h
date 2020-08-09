@@ -18,6 +18,11 @@ public:
 	virtual void	set_colour				(Colour colour_in);
 	virtual void	set_secondary_colour	(Colour colour_in);
 
+	virtual void	hide();
+	virtual void	show();
+	virtual void	set_visible( bool visibility );
+	virtual bool	is_visible();
+
 	virtual void	cancel();
 	virtual bool	is_being_clicked()		{ return m_clicked; };
 	bool			is_awaiting_action()	{ return m_needs_action; };
@@ -43,5 +48,8 @@ protected:
 	Colour m_hover_colour = Colour(169, 169, 169);
 	Colour m_clicked_colour = Colour(105, 105, 105);
 	Colour m_secondary_colour = Colour::Black;	
+
+private:
+	bool m_visible{ true };
 };
 
