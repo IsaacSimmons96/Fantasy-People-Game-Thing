@@ -50,65 +50,64 @@ void PERSON::print_info()
 //--------------------------------------------------------
 //TODO Harry - write the description for this function
 //--------------------------------------------------------
-void PERSON::set_age() //not going to return, just going to do something in class. input parameter to get func to work.
+void PERSON::set_age() //not going to return, just going to do something in class
 {
-	uint16_t MAX_AGE; //define max-age?
+	uint16_t max_age = 0; //define max-age?
 
 	switch (m_race)
 	{
 		case RACE::HUMAN:
 		{
-			MAX_AGE = 110; //future average age and normal dist?
+			max_age = 110; //future average age and normal dist?
 			break; //breaks for loop, we don't need to do other races
 		}
 		case RACE::ELF:
 		{
-			MAX_AGE = 750;
+			max_age = 750;
 			break;
 		}
 		case RACE::DWARF:
 		{
-			MAX_AGE = 500; // on average 350
+			max_age = 500; // on average 350
 			break;
 		}
 		case RACE::HALF_ORC:
 		{
-			MAX_AGE = 75;
+			max_age = 75;
 			break;
 		}
 		case RACE::HALFLING:
 		{
-			MAX_AGE = 150; //lives until middle of their second century
+			max_age = 150; //lives until middle of their second century
 			break;
 		}
 		case RACE::HALF_ELF:
 		{
-			MAX_AGE = 180;
+			max_age = 180;
 			break;
 		}
 		case RACE::DRAGONBORN:
 		{
-			MAX_AGE = 80;
+			max_age = 80;
 			break;
 		}
 		case RACE::GNOME:
 		{
-			MAX_AGE = 450; // live til 350-500
+			max_age = 450; // live til 350-500
 			break;
 		}
 		case RACE::TIEFLING:
 		{
-			MAX_AGE = 125; //little longer than humans
+			max_age = 125; //little longer than humans
 			break;
 		}
 		default: //if all cases not covered, 
 		{
-			MAX_AGE = 100;
+			max_age = 100;
 			break;
 		}
 	}
-	m_age = rand() % MAX_AGE; //wtf is % lol. rand between 0 and MAX_AGE
-	//TODO Harry - ive made this function already for you to show you how you should setup the variables your going to be making
+	m_age = rand() % max_age; //wtf is % lol. rand between 0 and MAX_AGE
 }
 
 // STATIC FUNCTIONS //

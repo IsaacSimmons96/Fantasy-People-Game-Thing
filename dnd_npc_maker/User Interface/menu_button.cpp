@@ -57,7 +57,7 @@ void MENU_VALUE_BUTTON::handle_mouse_release(sf::Mouse::Button button_type)
 //-----------------------------------------------------------------------------------------
 // MENU_BUTTON Constructor
 //-----------------------------------------------------------------------------------------
-MENU_BUTTON::MENU_BUTTON( const float width, const float height, const Colour col)
+MENU_BUTTON::MENU_BUTTON(const float width, const float height, const Colour col)
 	: BUTTON("Menu Button", width, height, col)
 {}
 
@@ -80,7 +80,7 @@ MENU_BUTTON::~MENU_BUTTON()
 void MENU_BUTTON::draw(sf::RenderWindow & window)
 {
 	parent::draw(window);
-	
+
 	if (m_needs_action && is_visible())
 	{
 		window.draw(m_menu_rectangle);
@@ -167,7 +167,7 @@ void MENU_BUTTON::handle_mouse_release(sf::Mouse::Button button_type)
 		else
 		{
 			close_menu();
-		}		
+		}
 		m_clicked = false;
 		break;
 	}
@@ -239,23 +239,67 @@ void MENU_BUTTON::expand_menu()
 
 	if (m_menu_buttons.size() == 0)
 	{
-		const Colour menu_value_button_colour = UI_OBJECT::lighten_colour(m_colour);
+		m_selected_value_colour = m_clicked_colour;
+		m_menu_button_colour = UI_OBJECT::lighten_colour(m_colour);
+
 		uint32_t value_index = 0;
 		for (auto value : m_values)
 		{
-			MENU_VALUE_BUTTON* value_button = new MENU_VALUE_BUTTON(this, value.first, value_index, m_button_rectangle.getSize().x, MENU_VALUE_BUTTON_HEIGHT, menu_value_button_colour);
-			value_button->set_font(m_font);
-			value_button->set_position(button_position.x, (button_position.y + m_button_rectangle.getGlobalBounds().height) + (MENU_VALUE_BUTTON_HEIGHT * value_index));
+			MENU_VALUE_BUTTON* value_button = nullptr;
 
-			m_menu_buttons.push_back(value_button);
+			if (value_index == m_selected_index)
+			{
+				value_button = new MENU_VALUE_BUTTON(this, value.first, value_index, m_button_rectangle.getSize().x, MENU_VALUE_BUTTON_HEIGHT, m_clicked_colour);
+
+				if (m_selected_value_clicked_colour == Colour::Black && value_button)
+				{
+					m_selected_value_clicked_colour = value_button->get_clicked_colour();
+					m_selected_value_hover_colour = value_button->get_hover_colour();
+				}
+			}
+			else
+			{
+				value_button = new MENU_VALUE_BUTTON(this, value.first, value_index, m_button_rectangle.getSize().x, MENU_VALUE_BUTTON_HEIGHT, m_menu_button_colour);
+
+				if (m_menu_button_clicked_colour == Colour::Black && value_button)
+				{
+					m_menu_button_clicked_colour = value_button->get_clicked_colour();
+					m_menu_button_hover_colour = value_button->get_hover_colour();
+				}
+			}
+
+			if (value_button)
+			{
+				value_button->set_font(m_font);
+				value_button->set_position(button_position.x, (button_position.y + m_button_rectangle.getGlobalBounds().height) + (MENU_VALUE_BUTTON_HEIGHT * value_index));
+
+				m_menu_buttons.push_back(value_button);
+			}
+
 			++value_index;
 		}
 	}
 	else
 	{
+		uint32_t value_index = 0;
 		for (auto button : m_menu_buttons)
 		{
+			if (value_index == m_selected_index)
+			{
+				button->set_colour(m_selected_value_colour);
+				button->set_hover_colour(m_selected_value_hover_colour);
+				button->set_clicked_colour(m_selected_value_clicked_colour);
+			}
+			else
+			{
+				button->set_colour(m_menu_button_colour);
+				button->set_hover_colour(m_menu_button_hover_colour);
+				button->set_clicked_colour(m_menu_button_clicked_colour);
+			}
+
 			button->show();
+
+			++value_index;
 		}
 	}
 
@@ -330,12 +374,12 @@ void MENU_BUTTON::set_selected_index(uint32_t new_selection)
 {
 	if (new_selection < m_values.size())
 	{
-		m_selected_index = new_selection;	
+		m_selected_index = new_selection;
 		update_selected_text();
 	}
 	else
 	{
 		CONSOLE::print_to_console("default value parameter exceeds size of vector of values! Setting it to 0");
 		m_selected_index = 0;
-	}	
+	}
 }

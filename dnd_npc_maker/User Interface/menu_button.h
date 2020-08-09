@@ -45,4 +45,11 @@ private:
 	std::vector<MENU_VALUE_BUTTON*> m_menu_buttons;
 	std::vector<std::pair<std::string, uint32_t>> m_values;
 
+	Colour m_menu_button_colour{ Colour::Black };
+	Colour m_menu_button_hover_colour{ Colour::Black };
+	Colour m_menu_button_clicked_colour{ Colour::Black };
+
+	Colour m_selected_value_colour{ Colour::Black };
+	Colour m_selected_value_hover_colour{ Colour::Black };
+	Colour m_selected_value_clicked_colour{ Colour::Black };
 };

@@ -2,7 +2,6 @@
 
 #include <string>
 #include <list>
-#include "fuzzy_search.h"
 #include "..\Headers\typedefs.h"
 
 enum class GENDER : uint8_t
@@ -25,6 +24,7 @@ enum class RACE : uint8_t
 	TIEFLING,
 	END_OF_RACES // Keep this at the end of the enum
 };
+
 class PERSON
 {
 public:
@@ -34,12 +34,12 @@ public:
 	static string	get_gender_string(GENDER gender);
 	static string	get_racial_string(RACE race);
 
-	string	get_forename()	const	{ return m_forename; };
-	string	get_surname()	const	{ return m_surname; };
+	string		get_forename()	const	{ return m_forename; };
+	string		get_surname()	const	{ return m_surname; };
 
-	GENDER	get_gender()	const	{ return m_gender; };
-	RACE	get_race()		const	{ return m_race; };
-	uint16_t get_age()const { return m_age; };
+	GENDER		get_gender()	const	{ return m_gender; };
+	RACE		get_race()		const	{ return m_race; };
+	uint16_t	get_age()		const	{ return m_age; };
 
 	  
 	void	print_info();
@@ -49,25 +49,24 @@ private:
 
 	// HARRY
 	// we prepend our classes variables with "m_" this is so it is easily identifiable which classes members in the class, and which are local variables in functions.
-	string	m_forename;
-	string	m_surname;
-	GENDER	m_gender;
-	RACE	m_race;
-	uint16_t m_age;
+	string		m_forename;
+	string		m_surname;
+	GENDER		m_gender;
+	RACE		m_race;
+	uint16_t	m_age;
+
+	uint8_t m_feet;
+	uint8_t m_inches;
+
+	// get the race base height for example human 4 foot 8 inches
+	// set m_feet to base foot and set m_inches to base inches
+	// temp_inches = roll_dice( DND_DICE::D10, 2);
+	// extra_feet = temp_inches / 12 
+	// extra_icnhes = = temp_inches / 12 REMAINDER
+	// m_inches = m_inches + extra_icnhes;
+	// m_feet = m_inches + extra_feet;
 
 	bool m_example_variable{ false }; //TODO Harry delete all traces of this varible when your done reading about it in the source file
-
-	//TODO Harry - Add an age variable think about the size of the integer we should use
-	// think about the oldest age a dungeon and dragons race can be!
-	// Take a look at the "Range of Values" table here https://en.cppreference.com/w/cpp/language/types
-	// The options we have are here 
-	// int8_t or uint8_t;
-	// int16_t or uint16_t;
-	// int32_t or uint32_t;
-	// int64_t or uint64_t;
-	// an usigned integer means it cant hold minus values, but it doubles its maximum size.
-	// for example int8_t is a signed character - which holds a range of -128 to 127
-	// however a uint8_t is an unsigned character - which holds a range of 0 - 255
 
 	//TODO Harry - Add a Hair Colour variable i suggest looking at how ive done RACE and GENDER and make another enum for HAIR_COLOUR
 

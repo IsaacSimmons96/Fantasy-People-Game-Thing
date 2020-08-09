@@ -16,7 +16,9 @@ public:
 	
 	virtual void	set_position(const float &x, const float &y) = 0;
 	virtual void	set_colour				(Colour colour_in);
+	virtual void	set_hover_colour		(Colour colour_in);
 	virtual void	set_secondary_colour	(Colour colour_in);
+	virtual void	set_clicked_colour		(Colour colour_in);
 
 	virtual void	hide();
 	virtual void	show();
