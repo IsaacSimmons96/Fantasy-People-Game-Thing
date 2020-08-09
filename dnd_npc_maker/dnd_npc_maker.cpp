@@ -12,6 +12,12 @@
 #include "..\dnd_npc_maker\Headers\console.h"
 #include "..\dnd_npc_maker\User Interface\menu_button.h"
 
+//------------------------------------------------------------------------------------------------
+// CONSTANTS
+//------------------------------------------------------------------------------------------------
+constexpr auto APPLICATION_WINDOW_TITLE = "DND NPC Generator";
+constexpr auto FONT_FILE_LOCATION = "../dnd_npc_maker/User Interface/Fonts/8-BIT WONDER.ttf";
+
 // HARRY
 // Keep this as true for your build harry :)
 constexpr bool is_harry_coding = true;
@@ -248,11 +254,9 @@ int main()
 			UI_OBJECT* object_needing_action = nullptr;
 
 			sf::Font* font = new sf::Font();
-			//TODO Isaac - Make this file location a constant somewhere
-			font->loadFromFile("../dnd_npc_maker/User Interface/Fonts/8-BIT WONDER.ttf");
+			font->loadFromFile(FONT_FILE_LOCATION);
 
-			//TODO Isaac make the window title a constant variable somewhere
-			sf::RenderWindow window(sf::VideoMode(1080, 720), "DND NPC Generator", sf::Style::Close | sf::Style::Titlebar);
+			sf::RenderWindow window(sf::VideoMode(1080, 720), APPLICATION_WINDOW_TITLE, sf::Style::Close | sf::Style::Titlebar);
 
 			BUTTON* test_button = new BUTTON("Button 1", 150, 80, Colour::Yellow);
 			test_button->set_font(font);
@@ -322,14 +326,12 @@ int main()
 			}
 
 			//TODO Isaac - make UI_OBJECT mouse over/click/hover handling with placeholders for the events being sent to the UI_OBJECT found
-			//TODO Isaac - finish button UI class
-			//TODO Isaac - make event_handler class
-			//TODO Isaac - make way of sending events and handling them in the event_handler class
+			//TODO Isaac - finish button UI class make it into a abstract class when ive got more specific buttons setup
 			//TODO Isaac - make box UI class
+			//TODO Isaac - make panel UI class
 			//TODO Isaac - make scrolling box UI class
 			//TODO Isaac - make text box UI class
-			//TODO Isaac - make dropdown menu UI class
-			//TODO Isaac - make class called page that holds all the SFML ui and can draw everything inside it with one function
+			//TODO Isaac - make class called page that holds all the SFML ui and can draw everything inside it with one function - panel class
 		}
 
 		// return 0 ends the program
