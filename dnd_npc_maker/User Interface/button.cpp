@@ -43,13 +43,16 @@ void BUTTON::set_font(sf::Font* font)
 //-------------------------------------------------------------
 void BUTTON::draw( sf::RenderWindow &window )
 {
-	if (m_clicked && m_button_rectangle.getFillColor() != m_clicked_colour)
+	if (is_visible())
 	{
-		m_button_rectangle.setFillColor(m_clicked_colour);
-	}
+		if (m_clicked && m_button_rectangle.getFillColor() != m_clicked_colour)
+		{
+			m_button_rectangle.setFillColor(m_clicked_colour);
+		}
 
-	window.draw( m_button_rectangle );
-	window.draw( m_button_text );
+		window.draw(m_button_rectangle);
+		window.draw(m_button_text);
+	}
 }
 
 //-------------------------------------------------------------
@@ -58,17 +61,19 @@ void BUTTON::draw( sf::RenderWindow &window )
 UI_OBJECT* BUTTON::get_if_mouse_over(sf::RenderWindow & window)
 {
 	UI_OBJECT* mouse_over = nullptr;
-
-	const float button_x_pos = m_button_rectangle.getPosition().x;
-	const float button_y_pos = m_button_rectangle.getPosition().y;
-	const float button_max_width = button_x_pos + m_button_rectangle.getLocalBounds().width;
-	const float button_max_height = button_y_pos + m_button_rectangle.getLocalBounds().height;
-
-	const float mouse_x_pos = static_cast<float>(sf::Mouse::getPosition(window).x);
-	const float mouse_y_pos = static_cast<float>(sf::Mouse::getPosition(window).y);
-	if (mouse_x_pos < button_max_width && mouse_x_pos > button_x_pos && mouse_y_pos < button_max_height && mouse_y_pos > button_y_pos)
+	if (is_visible())
 	{
-		mouse_over = this;
+		const float button_x_pos = m_button_rectangle.getPosition().x;
+		const float button_y_pos = m_button_rectangle.getPosition().y;
+		const float button_max_width = button_x_pos + m_button_rectangle.getLocalBounds().width;
+		const float button_max_height = button_y_pos + m_button_rectangle.getLocalBounds().height;
+
+		const float mouse_x_pos = static_cast<float>(sf::Mouse::getPosition(window).x);
+		const float mouse_y_pos = static_cast<float>(sf::Mouse::getPosition(window).y);
+		if (mouse_x_pos < button_max_width && mouse_x_pos > button_x_pos && mouse_y_pos < button_max_height && mouse_y_pos > button_y_pos)
+		{
+			mouse_over = this;
+		}
 	}
 
 	return mouse_over;
