@@ -100,24 +100,19 @@ void MENU_BUTTON::draw(sf::RenderWindow & window)
 //--------------------------------------------------------------------------------
 UI_OBJECT* MENU_BUTTON::get_if_mouse_over(sf::RenderWindow& window)
 {
-	UI_OBJECT* mouse_over = nullptr;
+	UI_OBJECT* mouse_over = parent::get_if_mouse_over(window);
 
-	if (is_visible())
+	if (!mouse_over)
 	{
-		mouse_over = parent::get_if_mouse_over(window);
-
-		if (!mouse_over)
+		for (auto object : m_menu_buttons)
 		{
-			for (auto object : m_menu_buttons)
+			if (object)
 			{
-				if (object)
-				{
-					mouse_over = object->get_if_mouse_over(window);
+				mouse_over = object->get_if_mouse_over(window);
 
-					if (mouse_over)
-					{
-						break;
-					}
+				if (mouse_over)
+				{
+					break;
 				}
 			}
 		}

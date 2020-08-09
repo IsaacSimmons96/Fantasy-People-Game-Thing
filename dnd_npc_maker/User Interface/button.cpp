@@ -5,19 +5,19 @@
 //-------------------------------------------------------------
 // Constructor
 //-------------------------------------------------------------
-BUTTON::BUTTON( const std::string text, const float width, const float height, const Colour col /*= Colour::White*/, uint8_t text_size /*= 18*/)
+BUTTON::BUTTON(const std::string text, const float width, const float height, const Colour col /*= Colour::White*/, uint8_t text_size /*= 18*/)
 {
 	m_colour = col;
 	m_hover_colour = UI_OBJECT::darken_colour(m_colour, 35);
 	m_clicked_colour = UI_OBJECT::darken_colour(m_hover_colour, 35);
 
-	m_button_rectangle.setSize( sf::Vector2f( width, height ) );
-	m_button_rectangle.setFillColor( m_colour );
+	m_button_rectangle.setSize(sf::Vector2f(width, height));
+	m_button_rectangle.setFillColor(m_colour);
 
 	m_button_text.setCharacterSize(text_size);
-	m_button_text.setFillColor( m_secondary_colour );
+	m_button_text.setFillColor(m_secondary_colour);
 	m_button_text.setString(text);
-} 
+}
 
 //-------------------------------------------------------------
 // Sets the position
@@ -41,7 +41,7 @@ void BUTTON::set_font(sf::Font* font)
 //-------------------------------------------------------------
 // Draws the button to the referenced window 
 //-------------------------------------------------------------
-void BUTTON::draw( sf::RenderWindow &window )
+void BUTTON::draw(sf::RenderWindow &window)
 {
 	if (is_visible())
 	{
@@ -61,19 +61,17 @@ void BUTTON::draw( sf::RenderWindow &window )
 UI_OBJECT* BUTTON::get_if_mouse_over(sf::RenderWindow & window)
 {
 	UI_OBJECT* mouse_over = nullptr;
-	if (is_visible())
-	{
-		const float button_x_pos = m_button_rectangle.getPosition().x;
-		const float button_y_pos = m_button_rectangle.getPosition().y;
-		const float button_max_width = button_x_pos + m_button_rectangle.getLocalBounds().width;
-		const float button_max_height = button_y_pos + m_button_rectangle.getLocalBounds().height;
 
-		const float mouse_x_pos = static_cast<float>(sf::Mouse::getPosition(window).x);
-		const float mouse_y_pos = static_cast<float>(sf::Mouse::getPosition(window).y);
-		if (mouse_x_pos < button_max_width && mouse_x_pos > button_x_pos && mouse_y_pos < button_max_height && mouse_y_pos > button_y_pos)
-		{
-			mouse_over = this;
-		}
+	const float button_x_pos = m_button_rectangle.getPosition().x;
+	const float button_y_pos = m_button_rectangle.getPosition().y;
+	const float button_max_width = button_x_pos + m_button_rectangle.getLocalBounds().width;
+	const float button_max_height = button_y_pos + m_button_rectangle.getLocalBounds().height;
+
+	const float mouse_x_pos = static_cast<float>(sf::Mouse::getPosition(window).x);
+	const float mouse_y_pos = static_cast<float>(sf::Mouse::getPosition(window).y);
+	if (mouse_x_pos < button_max_width && mouse_x_pos > button_x_pos && mouse_y_pos < button_max_height && mouse_y_pos > button_y_pos)
+	{
+		mouse_over = this;
 	}
 
 	return mouse_over;
@@ -86,18 +84,18 @@ void BUTTON::handle_mouse_click(sf::Mouse::Button button_type)
 {
 	switch (button_type)
 	{
-		case sf::Mouse::Left:
-		case sf::Mouse::Middle:
-		{
-			CONSOLE::print_to_console("held");
-			m_clicked = true;
-			break;
-		}
-		case sf::Mouse::Right:
-			break;
-		default:
-			break;
-	}	
+	case sf::Mouse::Left:
+	case sf::Mouse::Middle:
+	{
+		CONSOLE::print_to_console("held");
+		m_clicked = true;
+		break;
+	}
+	case sf::Mouse::Right:
+		break;
+	default:
+		break;
+	}
 }
 
 //-------------------------------------------------------------

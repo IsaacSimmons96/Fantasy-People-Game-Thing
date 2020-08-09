@@ -110,18 +110,19 @@ void handle_mouse_events(sf::Event &event, sf::RenderWindow &window, std::list<U
 {
 	auto get_mouse_over = [&]()
 	{
-		UI_OBJECT* object_found = nullptr;
+		UI_OBJECT* mouse_over_object = nullptr;
+
 		for (const auto object : ui_objects)
 		{
-			object_found = object->get_if_mouse_over(window);
-
-			if (object_found)
+			UI_OBJECT* found = object->get_if_mouse_over(window);
+			if (found && found->is_visible())
 			{
+				mouse_over_object = found;
 				break;
 			}
 		}
 
-		return object_found;
+		return mouse_over_object;
 	};
 
 	auto new_mouse_over = get_mouse_over();
