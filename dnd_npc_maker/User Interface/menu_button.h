@@ -30,6 +30,8 @@ public:
 	void		set_values(const std::vector<std::pair<std::string, uint32_t>> &values, uint32_t default_value = 0);
 
 private:
+	friend class MENU_VALUE_BUTTON;
+
 	void handle_value_selected(uint32_t selection_index);
 	void update_selected_text();
 	void expand_menu();
@@ -40,8 +42,7 @@ private:
 
 	uint32_t m_selected_index{ 0 };
 	sf::RectangleShape m_menu_rectangle;
-	std::vector<UI_OBJECT*> m_objects;
+	std::vector<MENU_VALUE_BUTTON*> m_menu_buttons;
 	std::vector<std::pair<std::string, uint32_t>> m_values;
 
-	friend class MENU_VALUE_BUTTON;
 };

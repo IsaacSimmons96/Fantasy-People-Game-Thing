@@ -66,12 +66,12 @@ MENU_BUTTON::MENU_BUTTON( const float width, const float height, const Colour co
 //-----------------------------------------------------------------------------------------
 MENU_BUTTON::~MENU_BUTTON()
 {
-	for (auto object : m_objects)
+	for (auto object : m_menu_buttons)
 	{
 		delete object;
 	}
 
-	m_objects.clear();
+	m_menu_buttons.clear();
 }
 
 //-----------------------------------------------------------------------------------------
@@ -84,7 +84,7 @@ void MENU_BUTTON::draw(sf::RenderWindow & window)
 	if (m_needs_action)
 	{
 		window.draw(m_menu_rectangle);
-		for (auto object : m_objects)
+		for (auto object : m_menu_buttons)
 		{
 			if (object)
 			{
@@ -103,7 +103,7 @@ UI_OBJECT* MENU_BUTTON::get_if_mouse_over(sf::RenderWindow& window)
 
 	if (!mouse_over)
 	{
-		for (auto object : m_objects)
+		for (auto object : m_menu_buttons)
 		{
 			if (object)
 			{
@@ -231,7 +231,7 @@ void MENU_BUTTON::expand_menu()
 	m_menu_rectangle.setSize(sf::Vector2f(m_button_rectangle.getSize().x, MENU_VALUE_BUTTON_HEIGHT * m_values.size()));
 	m_menu_rectangle.setFillColor(m_colour);
 
-	if (m_objects.size() == 0)
+	if (m_menu_buttons.size() == 0)
 	{
 		const Colour menu_value_button_colour = UI_OBJECT::lighten_colour(m_colour);
 		uint32_t value_index = 0;
@@ -241,7 +241,7 @@ void MENU_BUTTON::expand_menu()
 			value_button->set_font(m_font);
 			value_button->set_position(button_position.x, (button_position.y + m_button_rectangle.getGlobalBounds().height) + (MENU_VALUE_BUTTON_HEIGHT * value_index));
 
-			m_objects.push_back(value_button);
+			m_menu_buttons.push_back(value_button);
 			++value_index;
 		}
 	}
@@ -256,7 +256,7 @@ void MENU_BUTTON::close_menu()
 {
 	m_needs_action = false;
 
-	for (auto object : m_objects)
+	for (auto object : m_menu_buttons)
 	{
 		object->handle_mouse_leave();
 	}
@@ -268,14 +268,14 @@ void MENU_BUTTON::close_menu()
 void MENU_BUTTON::set_values(const std::vector<std::pair<std::string, uint32_t>>& values, uint32_t default_value /*= 0*/)
 {
 	//if we are setting new values for this and we already has existing values, we'll need to dispose of the objects we had!
-	if (m_objects.size() > 0)
+	if (m_menu_buttons.size() > 0)
 	{
-		for (auto object : m_objects)
+		for (auto object : m_menu_buttons)
 		{
 			delete object;
 		}
 
-		m_objects.clear();
+		m_menu_buttons.clear();
 	}
 
 	m_values = values;
@@ -312,7 +312,7 @@ uint32_t MENU_BUTTON::get_selected_value()
 //--------------------------------------------------------------------------------
 void MENU_BUTTON::set_selected_index(uint32_t new_selection)
 {
-	if (new_selection <= m_values.size() - 1)
+	if (new_selection < m_values.size())
 	{
 		m_selected_index = new_selection;	
 		update_selected_text();
