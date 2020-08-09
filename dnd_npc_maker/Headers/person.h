@@ -12,16 +12,19 @@ enum class GENDER : uint8_t
 	NONE
 };
 
-//TODO Harry - finish the list of races in DND
 enum class RACE : uint8_t 
 {
-	HUMAN,
-	ELF,
 	DWARF,
+	ELF,
+	HALFLING,
+	HALF_ELF,
 	HALF_ORC,
+	HUMAN,
+	DRAGONBORN,
+	GNOME,
+	TIEFLING,
 	END_OF_RACES // Keep this at the end of the enum
 };
-
 class PERSON
 {
 public:
@@ -36,11 +39,13 @@ public:
 
 	GENDER	get_gender()	const	{ return m_gender; };
 	RACE	get_race()		const	{ return m_race; };
+	uint16_t get_age()const { return m_age; };
+
 	  
 	void	print_info();
 
 private:
-	void set_age();
+	void set_age(); 
 
 	// HARRY
 	// we prepend our classes variables with "m_" this is so it is easily identifiable which classes members in the class, and which are local variables in functions.
@@ -48,6 +53,7 @@ private:
 	string	m_surname;
 	GENDER	m_gender;
 	RACE	m_race;
+	uint16_t m_age;
 
 	bool m_example_variable{ false }; //TODO Harry delete all traces of this varible when your done reading about it in the source file
 

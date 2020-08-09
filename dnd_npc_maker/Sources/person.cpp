@@ -11,7 +11,7 @@
 // It is called every time a new instance of that class is created, and normally will have variables that are crucial to the classes existance!
 // In this case, every person needs a name, surname etc... so this will make sure that these important variables are set whenver making a new person
 PERSON::PERSON(const string forename, string surname, const GENDER gender, const RACE race) 
-: m_forename{forename}, m_surname{ surname }, m_gender{ gender }, m_race{ race }
+	: m_forename{ forename }, m_surname{ surname }, m_gender{ gender }, m_race{ race }
 {
 	// HARRY
 	// The contructor can also be used to set variables before anything else in the class occurs.
@@ -41,6 +41,7 @@ void PERSON::print_info()
 	CONSOLE::print_to_console(" NAME   : " + m_forename + " " + m_surname);
 	CONSOLE::print_to_console(" GENDER : " + get_gender_string(m_gender));
 	CONSOLE::print_to_console(" RACE   : " + get_racial_string(m_race));
+	CONSOLE::print_to_console(" AGE    : " + std::to_string(m_age)); //convert number into displayabel string for console
 
 	//TODO Harry - for each varible you add, you should add it to this print function so you can test its working correctly! :)
 	//Give us a shout if you need help with printing integers or other types of variables
@@ -49,8 +50,64 @@ void PERSON::print_info()
 //--------------------------------------------------------
 //TODO Harry - write the description for this function
 //--------------------------------------------------------
-void PERSON::set_age()
+void PERSON::set_age() //not going to return, just going to do something in class. input parameter to get func to work.
 {
+	uint16_t MAX_AGE; //define max-age?
+
+	switch (m_race)
+	{
+		case RACE::HUMAN:
+		{
+			MAX_AGE = 110; //future average age and normal dist?
+			break; //breaks for loop, we don't need to do other races
+		}
+		case RACE::ELF:
+		{
+			MAX_AGE = 750;
+			break;
+		}
+		case RACE::DWARF:
+		{
+			MAX_AGE = 500; // on average 350
+			break;
+		}
+		case RACE::HALF_ORC:
+		{
+			MAX_AGE = 75;
+			break;
+		}
+		case RACE::HALFLING:
+		{
+			MAX_AGE = 150; //lives until middle of their second century
+			break;
+		}
+		case RACE::HALF_ELF:
+		{
+			MAX_AGE = 180;
+			break;
+		}
+		case RACE::DRAGONBORN:
+		{
+			MAX_AGE = 80;
+			break;
+		}
+		case RACE::GNOME:
+		{
+			MAX_AGE = 450; // live til 350-500
+			break;
+		}
+		case RACE::TIEFLING:
+		{
+			MAX_AGE = 125; //little longer than humans
+			break;
+		}
+		default: //if all cases not covered, 
+		{
+			MAX_AGE = 100;
+			break;
+		}
+	}
+	m_age = rand() % MAX_AGE; //wtf is % lol. rand between 0 and MAX_AGE
 	//TODO Harry - ive made this function already for you to show you how you should setup the variables your going to be making
 }
 
@@ -104,6 +161,26 @@ string PERSON::get_racial_string(RACE race)
 		case RACE::HALF_ORC:
 		{
 			return "Half Orc";
+		}
+		case RACE::HALFLING:
+		{
+			return "Halfling";
+		}
+		case RACE::HALF_ELF:
+		{
+			return "Half Elf";
+		}
+		case RACE::DRAGONBORN:
+		{
+			return "Dragonborn";
+		}
+		case RACE::GNOME:
+		{
+			return "Gnome";
+		}
+		case RACE::TIEFLING:
+		{
+			return "Tiefling";
 		}
 		default:
 		{
