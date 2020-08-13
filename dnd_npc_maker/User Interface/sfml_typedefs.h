@@ -1,11 +1,10 @@
 #pragma once
 #include <SFML\Graphics.hpp>
 
-typedef sf::Color Colour;
+typedef sf::Color COLOUR;
 
-namespace Custom_Colour
+namespace CUSTOM_COLOUR
 {
-	static const Colour Background(249, 249, 231);
-	static const Colour Skype(0, 175, 240);
+	static const COLOUR Background(249, 249, 231);
+	static const COLOUR Skype(0, 175, 240);
 }
-

@@ -9,7 +9,7 @@
 class BUTTON : public UI_OBJECT
 {
 public:
-	BUTTON(const std::string text, const float width, const float height, const Colour col = Colour::White, uint8_t text_size = 18);
+	BUTTON(const std::string text, const float width, const float height, sf::Font* font, const COLOUR col = COLOUR::White, uint8_t text_size = 14);
 
 	UI_OBJECT* get_if_mouse_over(sf::RenderWindow &window)		override;
 
@@ -18,17 +18,22 @@ public:
 	void handle_mouse_release(sf::Mouse::Button button_type)	override;
 	void handle_mouse_enter()									override;
 	void handle_mouse_leave()									override;		
+	
 
 	virtual void set_font(sf::Font* font);
 	void set_position(const float &x, const float &y) override;
-	void set_colour(Colour colour_in) override;
-	void set_secondary_colour(Colour colour_in) override;
+	void set_colour(COLOUR colour_in) override;
+	void set_secondary_colour(COLOUR colour_in) override;
 
-	float get_centre_x() const override;
-	float get_centre_y() const override;
+	float get_centre_x()	const override;
+	float get_centre_y()	const override;
+	float get_width()		const override;
+	float get_height()		const override;
 
 protected:
 	sf::Text m_button_text;
 	sf::RectangleShape m_button_rectangle;
+
+	
 };
 

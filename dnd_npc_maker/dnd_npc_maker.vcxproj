@@ -166,6 +166,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="User Interface\box.h" />
     <ClInclude Include="Headers\console.h" />
     <ClInclude Include="User Interface\menu_button.h" />
     <ClInclude Include="User Interface\button.h" />
@@ -179,6 +180,7 @@
     <ClInclude Include="User Interface\ui_object.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="User Interface\box.cpp" />
     <ClCompile Include="User Interface\menu_button.cpp" />
     <ClCompile Include="Sources\console.cpp" />
     <ClCompile Include="pch.cpp">

@@ -14,7 +14,7 @@ class MENU_BUTTON : public BUTTON
 	typedef BUTTON parent;
 
 public:
-	MENU_BUTTON( const float width, const float height, const Colour col = Colour::White);
+	MENU_BUTTON( const float width, const float height, sf::Font* font, const COLOUR col = COLOUR::White);
 	~MENU_BUTTON();
 
 	UI_OBJECT* get_if_mouse_over(sf::RenderWindow &window)		override;
@@ -45,11 +45,11 @@ private:
 	std::vector<MENU_VALUE_BUTTON*> m_menu_buttons;
 	std::vector<std::pair<std::string, uint32_t>> m_values;
 
-	Colour m_menu_button_colour{ Colour::Black };
-	Colour m_menu_button_hover_colour{ Colour::Black };
-	Colour m_menu_button_clicked_colour{ Colour::Black };
+	COLOUR m_menu_button_colour{ COLOUR::Black };
+	COLOUR m_menu_button_hover_colour{ COLOUR::Black };
+	COLOUR m_menu_button_clicked_colour{ COLOUR::Black };
 
-	Colour m_selected_value_colour{ Colour::Black };
-	Colour m_selected_value_hover_colour{ Colour::Black };
-	Colour m_selected_value_clicked_colour{ Colour::Black };
+	COLOUR m_selected_value_colour{ COLOUR::Black };
+	COLOUR m_selected_value_hover_colour{ COLOUR::Black };
+	COLOUR m_selected_value_clicked_colour{ COLOUR::Black };
 };

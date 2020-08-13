@@ -68,7 +68,7 @@ private:
 
 	bool m_example_variable{ false }; //TODO Harry delete all traces of this varible when your done reading about it in the source file
 
-	//TODO Harry - Add a Hair Colour variable i suggest looking at how ive done RACE and GENDER and make another enum for HAIR_COLOUR
+	//TODO Harry - Add a Hair COLOUR variable i suggest looking at how ive done RACE and GENDER and make another enum for HAIR_COLOUR
 
 	//TODO Harry - Add a Hair Style variable just like the above way of doing it. Could have BALD, LONG, SHORT, SHAVED, SHAGGY stuff like that
 

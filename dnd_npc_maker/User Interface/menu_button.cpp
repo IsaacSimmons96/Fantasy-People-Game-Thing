@@ -8,6 +8,7 @@
 constexpr float		MENU_VALUE_BUTTON_HEIGHT = 40;
 constexpr uint8_t	MENU_VALUE_BUTTON_FONT_SIZE = 14;
 
+#pragma region MENU_VALUE_BUTTON
 //----------------------------------------------------------------------------------------------------------------
 // MENU_VALUE_BUTTON - A class that helps the MENU_BUTTON!
 // Its purpose is to contain the strings and the indexs that correspond to MENU_BUTTON's m_values vector
@@ -16,7 +17,7 @@ constexpr uint8_t	MENU_VALUE_BUTTON_FONT_SIZE = 14;
 class MENU_VALUE_BUTTON : public BUTTON
 {
 public:
-	MENU_VALUE_BUTTON(MENU_BUTTON* parent, const std::string text, const uint32_t &selection_index, const float width, const float height, const Colour col);
+	MENU_VALUE_BUTTON(MENU_BUTTON* parent, const std::string text, const uint32_t &selection_index, const float width, const float height, sf::Font* font, const COLOUR col);
 
 	void handle_mouse_release(sf::Mouse::Button button_type) override;
 
@@ -28,8 +29,8 @@ private:
 //------------------------------------------------------------------------------
 // MENU_VALUE_BUTTON Constructor
 //------------------------------------------------------------------------------
-MENU_VALUE_BUTTON::MENU_VALUE_BUTTON(MENU_BUTTON* parent, const std::string text, const uint32_t &selection_index, const float width, const float height, const Colour col)
-	: m_parent_menu_button{ parent }, m_selection_index{ selection_index }, BUTTON(text, width, height, col, MENU_VALUE_BUTTON_FONT_SIZE)
+MENU_VALUE_BUTTON::MENU_VALUE_BUTTON(MENU_BUTTON* parent, const std::string text, const uint32_t &selection_index, const float width, const float height, sf::Font* font, const COLOUR col)
+	: m_parent_menu_button{ parent }, m_selection_index{ selection_index }, BUTTON(text, width, height, font, col, MENU_VALUE_BUTTON_FONT_SIZE)
 {}
 
 //------------------------------------------------------------------------------
@@ -53,12 +54,13 @@ void MENU_VALUE_BUTTON::handle_mouse_release(sf::Mouse::Button button_type)
 		break;
 	}
 }
+#pragma endregion MENU_VALUE_BUTTON
 
 //-----------------------------------------------------------------------------------------
 // MENU_BUTTON Constructor
 //-----------------------------------------------------------------------------------------
-MENU_BUTTON::MENU_BUTTON(const float width, const float height, const Colour col)
-	: BUTTON("Menu Button", width, height, col)
+MENU_BUTTON::MENU_BUTTON(const float width, const float height, sf::Font* font, const COLOUR col)
+	: BUTTON("Menu Button", width, height, font, col)
 {}
 
 //-----------------------------------------------------------------------------------------
@@ -77,7 +79,7 @@ MENU_BUTTON::~MENU_BUTTON()
 //-----------------------------------------------------------------------------------------
 // Draws the menu button to the referenced window along with its dropdown menu UI_OBJECTS
 //-----------------------------------------------------------------------------------------
-void MENU_BUTTON::draw(sf::RenderWindow & window)
+void MENU_BUTTON::draw(sf::RenderWindow &window)
 {
 	parent::draw(window);
 
@@ -102,6 +104,7 @@ UI_OBJECT* MENU_BUTTON::get_if_mouse_over(sf::RenderWindow& window)
 {
 	UI_OBJECT* mouse_over = parent::get_if_mouse_over(window);
 
+	//TODO Isaac - make it so we only search through our menu objects if we are in the bounds of the menu rectangle AND make this support view embedding
 	if (!mouse_over)
 	{
 		for (auto object : m_menu_buttons)
@@ -244,9 +247,9 @@ void MENU_BUTTON::expand_menu()
 
 			if (value_index == m_selected_index)
 			{
-				value_button = new MENU_VALUE_BUTTON(this, value.first, value_index, m_button_rectangle.getSize().x, MENU_VALUE_BUTTON_HEIGHT, m_clicked_colour);
+				value_button = new MENU_VALUE_BUTTON(this, value.first, value_index, m_button_rectangle.getSize().x, MENU_VALUE_BUTTON_HEIGHT, m_font, m_clicked_colour);
 
-				if (m_selected_value_clicked_colour == Colour::Black && value_button)
+				if (m_selected_value_clicked_colour == COLOUR::Black && value_button)
 				{
 					m_selected_value_clicked_colour = value_button->get_clicked_colour();
 					m_selected_value_hover_colour = value_button->get_hover_colour();
@@ -254,9 +257,9 @@ void MENU_BUTTON::expand_menu()
 			}
 			else
 			{
-				value_button = new MENU_VALUE_BUTTON(this, value.first, value_index, m_button_rectangle.getSize().x, MENU_VALUE_BUTTON_HEIGHT, m_menu_button_colour);
+				value_button = new MENU_VALUE_BUTTON(this, value.first, value_index, m_button_rectangle.getSize().x, MENU_VALUE_BUTTON_HEIGHT, m_font, m_menu_button_colour);
 
-				if (m_menu_button_clicked_colour == Colour::Black && value_button)
+				if (m_menu_button_clicked_colour == COLOUR::Black && value_button)
 				{
 					m_menu_button_clicked_colour = value_button->get_clicked_colour();
 					m_menu_button_hover_colour = value_button->get_hover_colour();
@@ -265,7 +268,6 @@ void MENU_BUTTON::expand_menu()
 
 			if (value_button)
 			{
-				value_button->set_font(m_font);
 				value_button->set_position(button_position.x, (button_position.y + m_button_rectangle.getGlobalBounds().height) + (MENU_VALUE_BUTTON_HEIGHT * value_index));
 
 				m_menu_buttons.push_back(value_button);

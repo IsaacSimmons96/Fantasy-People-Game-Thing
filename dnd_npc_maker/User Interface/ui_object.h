@@ -13,43 +13,48 @@ public:
 
 	virtual float	get_centre_x() const = 0;
 	virtual float	get_centre_y() const = 0;
+	virtual float	get_width() const = 0;
+	virtual float	get_height() const = 0;
 	
 	virtual void	set_position(const float &x, const float &y) = 0;
-	virtual void	set_colour				(Colour colour_in);
-	virtual void	set_hover_colour		(Colour colour_in);
-	virtual void	set_secondary_colour	(Colour colour_in);
-	virtual void	set_clicked_colour		(Colour colour_in);
+	virtual void	set_colour				(COLOUR colour_in);
+	virtual void	set_hover_colour		(COLOUR colour_in);
+	virtual void	set_secondary_colour	(COLOUR colour_in);
+	virtual void	set_clicked_colour		(COLOUR colour_in);
 
 	virtual void	hide();
 	virtual void	show();
 	virtual void	set_visible( bool visibility );
 	virtual bool	is_visible();
 
+	virtual void	set_debug(bool value)	{ m_debug = value; };
+
 	virtual void	cancel();
 	virtual bool	is_being_clicked()		{ return m_clicked; };
 	bool			is_awaiting_action()	{ return m_needs_action; };
 
-	virtual void	handle_mouse_click(sf::Mouse::Button button_type) = 0;
-	virtual void	handle_mouse_release(sf::Mouse::Button button_type) = 0;
-	virtual void	handle_mouse_enter()    = 0;
-	virtual void	handle_mouse_leave()    = 0;
+	virtual void	handle_mouse_click(sf::Mouse::Button button_type) {};
+	virtual void	handle_mouse_release(sf::Mouse::Button button_type) {};
+	virtual void	handle_mouse_enter() {};
+	virtual void	handle_mouse_leave() {};
 
-	Colour get_colour() const			{ return m_colour; };
-	Colour get_hover_colour() const     { return m_hover_colour; };
-	Colour get_clicked_colour() const   { return m_clicked_colour; };
-	Colour get_secondary_colour() const { return m_secondary_colour; };
+	COLOUR get_colour() const			{ return m_colour; };
+	COLOUR get_hover_colour() const     { return m_hover_colour; };
+	COLOUR get_clicked_colour() const   { return m_clicked_colour; };
+	COLOUR get_secondary_colour() const { return m_secondary_colour; };
 	
-	static Colour darken_colour(Colour colour_in, uint8_t darken_value = 20 );
-	static Colour lighten_colour(Colour colour_in, uint8_t lighten_value = 20);
+	static COLOUR darken_colour(COLOUR colour_in, uint8_t darken_value = 20 );
+	static COLOUR lighten_colour(COLOUR colour_in, uint8_t lighten_value = 20);
 
 protected:
 	bool m_clicked		{ false };
 	bool m_needs_action	{ false };
+	bool m_debug		{ false };
 
-	Colour m_colour = Colour::White;
-	Colour m_hover_colour = Colour(169, 169, 169);
-	Colour m_clicked_colour = Colour(105, 105, 105);
-	Colour m_secondary_colour = Colour::Black;	
+	COLOUR m_colour = COLOUR::White;
+	COLOUR m_hover_colour = COLOUR(169, 169, 169);
+	COLOUR m_clicked_colour = COLOUR(105, 105, 105);
+	COLOUR m_secondary_colour = COLOUR::Black;	
 
 private:
 	bool m_visible{ true };

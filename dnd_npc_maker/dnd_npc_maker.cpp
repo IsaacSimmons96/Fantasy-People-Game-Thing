@@ -7,10 +7,11 @@
 #include <sstream>
 #include <fstream>
 #include <windows.h>
-#include "..\dnd_npc_maker\Headers\typedefs.h"
-#include "..\dnd_npc_maker\Headers\person.h"
-#include "..\dnd_npc_maker\Headers\console.h"
-#include "..\dnd_npc_maker\User Interface\menu_button.h"
+#include "..\..\Headers\typedefs.h"
+#include "..\..\Headers\person.h"
+#include "..\..\Headers\console.h"
+#include "..\..\User Interface\menu_button.h"
+#include "..\..\User Interface\box.h"
 
 //------------------------------------------------------------------------------------------------
 // CONSTANTS
@@ -128,66 +129,66 @@ void handle_mouse_events(sf::Event &event, sf::RenderWindow &window, std::list<U
 	auto new_mouse_over = get_mouse_over();
 	switch (event.type)
 	{
-		case sf::Event::MouseMoved:
-		{
-			if (new_mouse_over != old_mouse_over)
-			{
-				if (new_mouse_over)
-				{
-					new_mouse_over->handle_mouse_enter();
-				}				
-
-				if (old_mouse_over)
-				{
-					// Have we been holding the mouse object? If so then we cancel the click
-					if (old_mouse_over->is_being_clicked())
-					{
-						old_mouse_over->cancel();
-					}
-
-					old_mouse_over->handle_mouse_leave();
-				}
-			}
-			break;
-		}
-		case sf::Event::MouseButtonPressed:
+	case sf::Event::MouseMoved:
+	{
+		if (new_mouse_over != old_mouse_over)
 		{
 			if (new_mouse_over)
 			{
-				new_mouse_over->handle_mouse_click(event.mouseButton.button);
+				new_mouse_over->handle_mouse_enter();
 			}
-			break;
+
+			if (old_mouse_over)
+			{
+				// Have we been holding the mouse object? If so then we cancel the click
+				if (old_mouse_over->is_being_clicked())
+				{
+					old_mouse_over->cancel();
+				}
+
+				old_mouse_over->handle_mouse_leave();
+			}
 		}
-		case sf::Event::MouseButtonReleased:
+		break;
+	}
+	case sf::Event::MouseButtonPressed:
+	{
+		if (new_mouse_over)
 		{
-			if (action_object)
-			{
-				if (new_mouse_over != action_object && action_object->is_awaiting_action())
-				{
-					action_object->cancel();
-				}
-
-				action_object = nullptr;
-			}
-
-			if (new_mouse_over)
-			{
-				new_mouse_over->handle_mouse_release(event.mouseButton.button);
-				if (new_mouse_over->is_awaiting_action())
-				{
-					action_object = new_mouse_over;
-				}
-			}
-			break;
+			new_mouse_over->handle_mouse_click(event.mouseButton.button);
 		}
-		
-		//case sf::Event::MouseWheelScrolled:
-		//{
-		//	// scroll the mouse wheen whilst over a UI_OBJECT
-		//	break;
-		//}
-		default:
-			break;
+		break;
+	}
+	case sf::Event::MouseButtonReleased:
+	{
+		if (action_object)
+		{
+			if (new_mouse_over != action_object && action_object->is_awaiting_action())
+			{
+				action_object->cancel();
+			}
+
+			action_object = nullptr;
+		}
+
+		if (new_mouse_over)
+		{
+			new_mouse_over->handle_mouse_release(event.mouseButton.button);
+			if (new_mouse_over->is_awaiting_action())
+			{
+				action_object = new_mouse_over;
+			}
+		}
+		break;
+	}
+
+	//case sf::Event::MouseWheelScrolled:
+	//{
+	//	// scroll the mouse wheen whilst over a UI_OBJECT
+	//	break;
+	//}
+	default:
+		break;
 	}
 
 	old_mouse_over = new_mouse_over;
@@ -259,19 +260,27 @@ int main()
 
 			sf::RenderWindow window(sf::VideoMode(1080, 720), APPLICATION_WINDOW_TITLE, sf::Style::Close | sf::Style::Titlebar);
 
-			BUTTON* test_button = new BUTTON("Button 1", 150, 80, Colour::Yellow);
+			BUTTON* test_button = new BUTTON("Button 1", 150, 80, font, COLOUR::Yellow);
 			test_button->set_font(font);
 			test_button->set_position(static_cast<float>(window.getSize().x / 2) - test_button->get_centre_x(), static_cast<float>(window.getSize().y / 2) - test_button->get_centre_y());
 
-			BUTTON* test_button2 = new BUTTON("Button 2", 150, 80, Colour::Blue);
+			BOX* test_box = new BOX(500, 0, 200, 400, window);
+			test_box->set_debug(true);
+
+			BUTTON* test_button3 = new BUTTON("Button 3", 150, 80, font, COLOUR::Cyan);
+			test_button3->set_position(0, 0);
+
+			test_box->embed_object(test_button3);
+
+			/*BUTTON* test_button2 = new BUTTON("Button 2", 150, 80, COLOUR::Blue);
 			test_button2->set_font(font);
 			test_button2->set_position(static_cast<float>(window.getSize().x / 2) - test_button2->get_centre_x(), static_cast<float>(window.getSize().y / 4) - test_button2->get_centre_y());
 
-			BUTTON* test_button3 = new BUTTON("Button 3", 150, 80, Colour::Cyan);
+			BUTTON* test_button3 = new BUTTON("Button 3", 150, 80, COLOUR::Cyan);
 			test_button3->set_font(font);
 			test_button3->set_position(static_cast<float>(window.getSize().x / 2) - test_button3->get_centre_x(), static_cast<float>(window.getSize().y) - test_button3->get_centre_y() * 6);
 
-			MENU_BUTTON* menu_button = new MENU_BUTTON( 150, 80, Custom_Colour::Skype);
+			MENU_BUTTON* menu_button = new MENU_BUTTON(150, 80, CUSTOM_COLOUR::Skype);
 			menu_button->set_font(font);
 			menu_button->set_position(static_cast<float>(window.getSize().x / 4) - test_button3->get_centre_x(), static_cast<float>(window.getSize().y / 4) - test_button2->get_centre_y());
 
@@ -282,10 +291,12 @@ int main()
 			}
 			menu_button->set_values(race_list);
 
-			ui_objects.push_back(test_button);
 			ui_objects.push_back(test_button2);
 			ui_objects.push_back(test_button3);
-			ui_objects.push_back(menu_button);
+			ui_objects.push_back(menu_button);*/
+
+			ui_objects.push_back(test_button);
+			ui_objects.push_back(test_box);
 
 			while (window.isOpen())
 			{
@@ -298,7 +309,7 @@ int main()
 					case sf::Event::MouseMoved:
 					case sf::Event::MouseButtonReleased:
 					case sf::Event::MouseButtonPressed:
-					// sf::Event::MouseWheelScrolled: - commented until making a widget that needs scrolling!
+						// sf::Event::MouseWheelScrolled: - commented until making a widget that needs scrolling!
 					{
 						handle_mouse_events(event, window, ui_objects, current_mouse_over, object_needing_action);
 						break;
@@ -321,14 +332,14 @@ int main()
 					}
 				}
 
-				window.clear(Custom_Colour::Background);
+				window.clear(CUSTOM_COLOUR::Background);
 				draw_ui_objects(window, ui_objects);
 				window.display();
 			}
 
 			//TODO Isaac - make UI_OBJECT mouse over/click/hover handling with placeholders for the events being sent to the UI_OBJECT found
 			//TODO Isaac - finish button UI class make it into a abstract class when ive got more specific buttons setup
-			//TODO Isaac - make box UI class
+			//TODO Isaac - make box UI class - IN PROGRESS
 			//TODO Isaac - make panel UI class
 			//TODO Isaac - make scrolling box UI class
 			//TODO Isaac - make text box UI class
@@ -343,3 +354,12 @@ int main()
 		return 0;
 	}
 }
+
+// in case i need this, this is how i scaled sizing for a weirdly sized view but im like 80% sure i dont need this anymore but that 20% says NO!
+/*const float box_width = 150;
+const float test_box_scale_width = (window.getSize().x - view_width);
+const float width_scale_by = (test_box_scale_width / view_width)* box_width;
+
+const float box_hieght = 80;
+const float test_box_scale_height = (window.getSize().y - view_height);
+const float height_scale_by = (test_box_scale_height / view_height) * box_hieght;*/

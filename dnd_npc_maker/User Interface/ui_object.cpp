@@ -2,22 +2,22 @@
 #include "ui_object.h"
 #include "..\Headers\console.h"
 
-void UI_OBJECT::set_colour(Colour colour_in)
+void UI_OBJECT::set_colour(COLOUR colour_in)
 {
 	m_colour = colour_in;
 }
 
-void UI_OBJECT::set_hover_colour(Colour colour_in)
+void UI_OBJECT::set_hover_colour(COLOUR colour_in)
 {
 	m_hover_colour = colour_in;
 }
 
-void UI_OBJECT::set_secondary_colour(Colour colour_in)
+void UI_OBJECT::set_secondary_colour(COLOUR colour_in)
 {
 	m_secondary_colour = colour_in;
 }
 
-void UI_OBJECT::set_clicked_colour(Colour colour_in)
+void UI_OBJECT::set_clicked_colour(COLOUR colour_in)
 {
 	m_clicked_colour = colour_in;
 }
@@ -48,7 +48,7 @@ void UI_OBJECT::cancel()
 	m_clicked = false;
 }
 
-Colour UI_OBJECT::darken_colour(Colour colour_in, uint8_t darken_value /*= 20*/)
+COLOUR UI_OBJECT::darken_colour(COLOUR colour_in, uint8_t darken_value /*= 20*/)
 {
 	auto if_doable_darken_value = [&]( uint8_t &value_to_change )
 	{
@@ -65,7 +65,7 @@ Colour UI_OBJECT::darken_colour(Colour colour_in, uint8_t darken_value /*= 20*/)
 	return colour_in;
 }
 
-Colour UI_OBJECT::lighten_colour(Colour colour_in, uint8_t lighten_value /*= 20*/)
+COLOUR UI_OBJECT::lighten_colour(COLOUR colour_in, uint8_t lighten_value /*= 20*/)
 {
 	auto if_doable_lighten_value = [&](uint8_t &value_to_change)
 	{

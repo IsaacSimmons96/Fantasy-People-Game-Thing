@@ -5,7 +5,7 @@
 //-------------------------------------------------------------
 // Constructor
 //-------------------------------------------------------------
-BUTTON::BUTTON(const std::string text, const float width, const float height, const Colour col /*= Colour::White*/, uint8_t text_size /*= 18*/)
+BUTTON::BUTTON(const std::string text, const float width, const float height, sf::Font* font, const COLOUR col /*= COLOUR::White*/, uint8_t text_size /*= 14*/)
 {
 	m_colour = col;
 	m_hover_colour = UI_OBJECT::darken_colour(m_colour, 35);
@@ -14,9 +14,11 @@ BUTTON::BUTTON(const std::string text, const float width, const float height, co
 	m_button_rectangle.setSize(sf::Vector2f(width, height));
 	m_button_rectangle.setFillColor(m_colour);
 
+	set_font(font);
 	m_button_text.setCharacterSize(text_size);
 	m_button_text.setFillColor(m_secondary_colour);
 	m_button_text.setString(text);
+
 }
 
 //-------------------------------------------------------------
@@ -36,6 +38,9 @@ void BUTTON::set_position(const float &x, const float &y)
 void BUTTON::set_font(sf::Font* font)
 {
 	m_button_text.setFont(*font);
+
+	auto& texture = const_cast<sf::Texture&>(font->getTexture(m_button_text.getCharacterSize()));
+	texture.setSmooth(false);
 }
 
 //-------------------------------------------------------------
@@ -67,9 +72,9 @@ UI_OBJECT* BUTTON::get_if_mouse_over(sf::RenderWindow & window)
 	const float button_max_width = button_x_pos + m_button_rectangle.getLocalBounds().width;
 	const float button_max_height = button_y_pos + m_button_rectangle.getLocalBounds().height;
 
-	const float mouse_x_pos = static_cast<float>(sf::Mouse::getPosition(window).x);
-	const float mouse_y_pos = static_cast<float>(sf::Mouse::getPosition(window).y);
-	if (mouse_x_pos < button_max_width && mouse_x_pos > button_x_pos && mouse_y_pos < button_max_height && mouse_y_pos > button_y_pos)
+	const sf::Vector2i mouse_pos = sf::Mouse::getPosition(window);
+	const sf::Vector2f world_mouse_pos = window.mapPixelToCoords(mouse_pos);
+	if (world_mouse_pos.x < button_max_width && world_mouse_pos.x > button_x_pos && world_mouse_pos.y < button_max_height && world_mouse_pos.y > button_y_pos)
 	{
 		mouse_over = this;
 	}
@@ -154,14 +159,30 @@ float BUTTON::get_centre_y() const
 }
 
 //-------------------------------------------------------------
-void BUTTON::set_colour(Colour colour_in)
+// Returns the width of the button
+//-------------------------------------------------------------
+float BUTTON::get_width() const
+{
+	return m_button_rectangle.getSize().x;
+}
+
+//-------------------------------------------------------------
+// Returns the height of the button
+//-------------------------------------------------------------
+float BUTTON::get_height() const
+{
+	return m_button_rectangle.getSize().y;
+}
+
+//-------------------------------------------------------------
+void BUTTON::set_colour(COLOUR colour_in)
 {
 	UI_OBJECT::set_colour(colour_in);
 	m_button_rectangle.setFillColor(m_colour);
 }
 
 //-------------------------------------------------------------
-void BUTTON::set_secondary_colour(Colour colour_in)
+void BUTTON::set_secondary_colour(COLOUR colour_in)
 {
 	UI_OBJECT::set_secondary_colour(colour_in);
 	m_button_text.setFillColor(m_secondary_colour);
