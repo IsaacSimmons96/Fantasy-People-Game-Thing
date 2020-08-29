@@ -21,7 +21,7 @@ constexpr auto FONT_FILE_LOCATION = "../dnd_npc_maker/User Interface/Fonts/8-BIT
 
 // HARRY
 // Keep this as true for your build harry :)
-constexpr bool is_harry_coding = true;
+constexpr bool is_harry_coding = false;
 
 //------------------------------------------------------------------------------------------------
 // takes in the three lists for female,male and sur names, and fills them using the CSV files
@@ -269,6 +269,10 @@ int main()
 
 			BUTTON* test_button3 = new BUTTON("Button 3", 150, 80, font, COLOUR::Cyan);
 			test_button3->set_position(0, 0);
+			test_button3->set_debug( true );
+			test_button3->add_attachment( LAYOUT_ATTACHMENT::TOP );
+			test_button3->add_attachment( LAYOUT_ATTACHMENT::LEFT );
+			test_button3->clear_attachment( LAYOUT_ATTACHMENT::TOP );
 
 			test_box->embed_object(test_button3);
 

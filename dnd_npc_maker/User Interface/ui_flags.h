@@ -1,0 +1,14 @@
+#pragma once
+
+enum class LAYOUT_ATTACHMENT : uint8_t
+{
+	IGNORE_ATTACHMENTS,
+	TOP,
+	BOTTOM,
+	LEFT,
+	RIGHT,
+	TOP_AND_BOTTOM,
+	LEFT_AND_RIGHT,
+	ALL_SIDES,
+	CENTRE
+};

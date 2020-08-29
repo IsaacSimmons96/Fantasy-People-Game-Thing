@@ -51,6 +51,9 @@
     <ClInclude Include="User Interface\box.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="User Interface\ui_flags.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

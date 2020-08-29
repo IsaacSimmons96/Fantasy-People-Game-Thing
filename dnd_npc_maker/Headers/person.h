@@ -11,7 +11,7 @@ enum class GENDER : uint8_t
 	NONE
 };
 
-enum class RACE : uint8_t 
+enum class RACE : uint8_t
 {
 	DWARF,
 	ELF,
@@ -28,24 +28,24 @@ enum class RACE : uint8_t
 class PERSON
 {
 public:
-	PERSON(const string forename, string surname, const GENDER gender, const RACE race );
+	PERSON( const string forename, string surname, const GENDER gender, const RACE race );
 
-	static PERSON*	generate_random_person(std::string m_names[], std::string f_names[], std::string s_names[]);
-	static string	get_gender_string(GENDER gender);
-	static string	get_racial_string(RACE race);
+	static PERSON*	generate_random_person( std::string m_names[], std::string f_names[], std::string s_names[] );
+	static string	get_gender_string( GENDER gender );
+	static string	get_racial_string( RACE race );
 
-	string		get_forename()	const	{ return m_forename; };
-	string		get_surname()	const	{ return m_surname; };
+	string		get_forename()	const { return m_forename; };
+	string		get_surname()	const { return m_surname; };
 
-	GENDER		get_gender()	const	{ return m_gender; };
-	RACE		get_race()		const	{ return m_race; };
-	uint16_t	get_age()		const	{ return m_age; };
+	GENDER		get_gender()	const { return m_gender; };
+	RACE		get_race()		const { return m_race; };
+	uint16_t	get_age()		const { return m_age; };
 
-	  
+
 	void	print_info();
 
 private:
-	void set_age(); 
+	void set_age();
 
 	// HARRY
 	// we prepend our classes variables with "m_" this is so it is easily identifiable which classes members in the class, and which are local variables in functions.
