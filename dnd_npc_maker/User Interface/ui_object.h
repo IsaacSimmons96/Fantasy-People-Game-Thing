@@ -2,6 +2,12 @@
 #include "colours.h"
 #include "ui_flags.h"
 
+enum class MOUSE_WHEEL_DIRECTION : uint8_t
+{
+	SCROLLING_UP,
+	SCROLLING_DOWN
+};
+
 //-------------------------------------------------------------------------------------------
 // UI_OBJECT is the base class for all ui classes in this program!
 // The idea being that all basic user interface functionality should be defined here!
@@ -52,6 +58,7 @@ public:
 	virtual void	handle_mouse_release( sf::Mouse::Button button_type ) {};
 	virtual void	handle_mouse_enter() {};
 	virtual void	handle_mouse_leave() {};
+	virtual void	handle_mouse_scroll( float mouse_wheel_direction ) {};
 
 	//COLOURS
 	virtual void	set_colour( COLOUR colour_in );
@@ -76,6 +83,8 @@ protected:
 	COLOUR m_hover_colour = COLOUR( 169, 169, 169 );
 	COLOUR m_clicked_colour = COLOUR( 105, 105, 105 );
 	COLOUR m_secondary_colour = COLOUR::Black;
+
+	MOUSE_WHEEL_DIRECTION get_mouse_wheel_direction( float mouse_wheel_delta ) const;
 
 private:
 	LAYOUT_ATTACHMENT m_layout_attachment{ LAYOUT_ATTACHMENT::INVALID };

@@ -54,6 +54,9 @@
     <ClInclude Include="User Interface\colours.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="User Interface\scrolling_box.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -84,6 +87,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="User Interface\box.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="User Interface\scrolling_box.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -27,6 +27,9 @@ public:
 	float get_height()		const override;
 	sf::View* get_view()	const { return m_view_box; };
 
+protected:
+	sf::View*				m_view_box{ nullptr };
+
 private:
 	void reposition_embedded_object( UI_OBJECT * object );
 	void position_object_and_embed( UI_OBJECT* object );
@@ -34,7 +37,6 @@ private:
 	float convert_to_0_to_1_scale( float input, float window_size );
 
 	sf::RenderWindow*		m_parent_window{ nullptr };
-	sf::View*				m_view_box{ nullptr };
 	std::vector<UI_OBJECT*> m_embedded_objects;
 	sf::RectangleShape		m_background_rect;
 

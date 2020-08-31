@@ -166,6 +166,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="User Interface\scrolling_box.h" />
     <ClInclude Include="User Interface\colours.h" />
     <ClInclude Include="User Interface\ui_flags.h" />
     <ClInclude Include="User Interface\box.h" />
@@ -181,6 +182,7 @@
     <ClInclude Include="User Interface\ui_object.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="User Interface\scrolling_box.cpp" />
     <ClCompile Include="User Interface\box.cpp" />
     <ClCompile Include="User Interface\menu_button.cpp" />
     <ClCompile Include="Sources\console.cpp" />

@@ -182,11 +182,14 @@ void handle_mouse_events( sf::Event &event, sf::RenderWindow &window, std::list<
 			break;
 		}
 
-		//case sf::Event::MouseWheelScrolled:
-		//{
-		//	// scroll the mouse wheen whilst over a UI_OBJECT
-		//	break;
-		//}
+		case sf::Event::MouseWheelScrolled:
+		{
+			if( new_mouse_over )
+			{
+				new_mouse_over->handle_mouse_scroll( event.mouseWheelScroll.delta );
+			}
+			break;
+		}
 		default:
 			break;
 	}
@@ -296,17 +299,12 @@ int main()
 						case sf::Event::MouseMoved:
 						case sf::Event::MouseButtonReleased:
 						case sf::Event::MouseButtonPressed:
-							// sf::Event::MouseWheelScrolled: - commented until making a widget that needs scrolling!
+						case sf::Event::MouseWheelScrolled:
 						{
 							handle_mouse_events( event, window, ui_objects, current_mouse_over, object_needing_action );
 							break;
 						}
-
-						case sf::Event::MouseWheelScrolled:
-						{
-							std::cout << "wheel movement: " << event.mouseWheelScroll.delta << std::endl;
-							break;
-						}
+							
 
 						case sf::Event::Closed:
 						{

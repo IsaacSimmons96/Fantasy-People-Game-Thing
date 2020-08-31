@@ -15,7 +15,7 @@ BOX::BOX( float x_pos, float y_pos, float width, float height, sf::RenderWindow&
 	m_box_height = height;
 	m_parent_window = &window;
 
-	m_view_box = new sf::View( sf::FloatRect( 0.f, 0.f, m_box_width, m_box_height ) );	
+	m_view_box = new sf::View( sf::FloatRect( 0.f, 0.f, m_box_width, m_box_height ) );
 
 	const float view_port_x_position = convert_to_0_to_1_scale( m_box_x_pos, m_parent_window->getSize().x );
 	const float view_port_y_position = convert_to_0_to_1_scale( m_box_y_pos, m_parent_window->getSize().y );
@@ -72,6 +72,11 @@ UI_OBJECT* BOX::get_if_mouse_over( sf::RenderWindow & window )
 				}
 			}
 
+			if( mouse_over == nullptr )
+			{
+				mouse_over = this;
+			}
+
 			window.setView( window.getDefaultView() );
 		}
 	}
@@ -86,8 +91,6 @@ void BOX::draw( sf::RenderWindow & window )
 {
 	if( is_visible() && m_view_box )
 	{
-		m_view_box->move( 0, 0.025f ); // Testing how a scrolling box would work.
-
 		window.setView( *m_view_box );
 		window.draw( m_background_rect );
 
@@ -122,7 +125,7 @@ void BOX::draw( sf::RenderWindow & window )
 			right_outline.setPosition( sf::Vector2f( m_box_width + m_box_x_pos - debug_line_thickness, m_box_y_pos ) );
 
 			sf::RectangleShape bottom_outline;
-			bottom_outline.setSize( sf::Vector2f( m_box_width , debug_line_thickness ) );
+			bottom_outline.setSize( sf::Vector2f( m_box_width, debug_line_thickness ) );
 			bottom_outline.setFillColor( COLOUR::Red );
 			bottom_outline.setPosition( sf::Vector2f( m_box_x_pos, m_box_height + m_box_y_pos - debug_line_thickness ) );
 
@@ -132,7 +135,7 @@ void BOX::draw( sf::RenderWindow & window )
 			window.draw( bottom_outline );
 		}
 
-		
+
 	}
 }
 

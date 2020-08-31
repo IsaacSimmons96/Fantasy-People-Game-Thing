@@ -54,6 +54,11 @@ void UI_OBJECT::clear_attachment( LAYOUT_ATTACHMENT attachment_in )
 	print_attachment();
 }
 
+MOUSE_WHEEL_DIRECTION UI_OBJECT::get_mouse_wheel_direction( float mouse_wheel_delta ) const
+{
+	return mouse_wheel_delta < 0 ? MOUSE_WHEEL_DIRECTION::SCROLLING_DOWN : MOUSE_WHEEL_DIRECTION::SCROLLING_UP;
+}
+
 void UI_OBJECT::print_attachment()
 {
 	if( m_debug )
