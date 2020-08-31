@@ -1,5 +1,5 @@
 #pragma once
-#include "sfml_typedefs.h"
+#include "colours.h"
 #include "ui_flags.h"
 
 //-------------------------------------------------------------------------------------------
@@ -12,29 +12,38 @@ public:
 	virtual UI_OBJECT*	get_if_mouse_over( sf::RenderWindow &window ) = 0;
 	virtual void		draw( sf::RenderWindow &window ) = 0;
 
+	//POSITION
+	virtual void	set_position( const float &x, const float &y ) = 0;
+	virtual float	get_x_offset() const { return m_x_offset; };
+	virtual float	get_y_offset() const { return m_y_offset; };
+
+	virtual void	set_offsets( const float &x_off, const float &y_off )
+	{
+		m_x_offset = x_off;
+		m_y_offset = y_off;
+	};
+
 	virtual float	get_centre_x() const = 0;
 	virtual float	get_centre_y() const = 0;
 	virtual float	get_width() const = 0;
 	virtual float	get_height() const = 0;
 
-	virtual void	set_position( const float &x, const float &y ) = 0;
-	virtual void	set_colour( COLOUR colour_in );
-	virtual void	set_hover_colour( COLOUR colour_in );
-	virtual void	set_secondary_colour( COLOUR colour_in );
-	virtual void	set_clicked_colour( COLOUR colour_in );
+	virtual	bool	has_attachment( LAYOUT_ATTACHMENT attachment_to_find )
+	{
+		return m_layout_attachment == attachment_to_find;
+	}
 
+	virtual	LAYOUT_ATTACHMENT get_attachment() { return m_layout_attachment; };
+	virtual void	set_attachment( LAYOUT_ATTACHMENT attachment_in );
+	virtual void	clear_attachment( LAYOUT_ATTACHMENT attachment_in );	
+
+	//VISIBILITY
 	virtual void	hide();
 	virtual void	show();
 	virtual void	set_visible( bool visibility );
 	virtual bool	is_visible();
 
-	virtual void	add_attachments( std::vector<LAYOUT_ATTACHMENT>& attachments_in );
-	virtual void	add_attachment( LAYOUT_ATTACHMENT attachment_in );
-	virtual void	clear_attachment( LAYOUT_ATTACHMENT attachment_in );
-	virtual void	clear_attachments();
-
-	virtual void	set_debug( bool value ) { m_debug = value; };
-
+	//MOUSE
 	virtual void	cancel();
 	virtual bool	is_being_clicked() { return m_clicked; };
 	bool			is_awaiting_action() { return m_needs_action; };
@@ -44,13 +53,19 @@ public:
 	virtual void	handle_mouse_enter() {};
 	virtual void	handle_mouse_leave() {};
 
+	//COLOURS
+	virtual void	set_colour( COLOUR colour_in );
+	virtual void	set_hover_colour( COLOUR colour_in );
+	virtual void	set_secondary_colour( COLOUR colour_in );
+	virtual void	set_clicked_colour( COLOUR colour_in );
+
 	COLOUR get_colour() const { return m_colour; };
 	COLOUR get_hover_colour() const { return m_hover_colour; };
 	COLOUR get_clicked_colour() const { return m_clicked_colour; };
 	COLOUR get_secondary_colour() const { return m_secondary_colour; };
 
-	static COLOUR darken_colour( COLOUR colour_in, uint8_t darken_value = 20 );
-	static COLOUR lighten_colour( COLOUR colour_in, uint8_t lighten_value = 20 );
+	//DEBUG
+	virtual void	set_debug( bool value ) { m_debug = value; };
 
 protected:
 	bool m_clicked{ false };
@@ -63,8 +78,12 @@ protected:
 	COLOUR m_secondary_colour = COLOUR::Black;
 
 private:
-	std::vector<LAYOUT_ATTACHMENT> m_attachments;
-	void print_attachments();
+	LAYOUT_ATTACHMENT m_layout_attachment{ LAYOUT_ATTACHMENT::INVALID };
+
+	float m_y_offset{ 0.0 };
+	float m_x_offset{ 0.0 };
+
+	void print_attachment();
 
 	bool m_visible{ true };
 };

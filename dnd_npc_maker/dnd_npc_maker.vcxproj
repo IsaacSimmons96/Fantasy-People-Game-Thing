@@ -166,6 +166,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="User Interface\colours.h" />
     <ClInclude Include="User Interface\ui_flags.h" />
     <ClInclude Include="User Interface\box.h" />
     <ClInclude Include="Headers\console.h" />
@@ -176,7 +177,6 @@
     <ClInclude Include="Headers\person.h" />
     <ClInclude Include="Headers\typedefs.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="User Interface\sfml_typedefs.h" />
     <ClInclude Include="Sources\district.h" />
     <ClInclude Include="User Interface\ui_object.h" />
   </ItemGroup>

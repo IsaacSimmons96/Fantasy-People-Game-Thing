@@ -18,10 +18,11 @@ public:
 	void handle_mouse_release(sf::Mouse::Button button_type)	override;
 	void handle_mouse_enter()									override;
 	void handle_mouse_leave()									override;		
-	
 
 	virtual void set_font(sf::Font* font);
+
 	void set_position(const float &x, const float &y) override;
+
 	void set_colour(COLOUR colour_in) override;
 	void set_secondary_colour(COLOUR colour_in) override;
 

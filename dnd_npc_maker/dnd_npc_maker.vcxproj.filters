@@ -39,9 +39,6 @@
     <ClInclude Include="User Interface\button.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="User Interface\sfml_typedefs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="User Interface\ui_object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -52,6 +49,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="User Interface\ui_flags.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="User Interface\colours.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
