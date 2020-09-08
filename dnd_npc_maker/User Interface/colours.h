@@ -5,8 +5,10 @@ typedef sf::Color COLOUR;
 
 namespace CUSTOM_COLOUR
 {
-	static const COLOUR Background( 249, 249, 231 );
-	static const COLOUR Skype( 0, 175, 240 );
+	static const COLOUR BACKGROUND( 249, 249, 231 );
+	static const COLOUR SKYPE( 0, 175, 240 );
+	static const COLOUR SCROLL_BUTTON_GREY( 148, 148, 148 );
+	static const COLOUR SCROLL_BAR_GREY( 84, 84, 84 );
 }
 
 namespace COLOUR_UTIL

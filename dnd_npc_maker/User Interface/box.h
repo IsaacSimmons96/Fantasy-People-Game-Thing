@@ -7,7 +7,7 @@
 class BOX : public UI_OBJECT
 {
 public:
-	BOX( float x_pos, float y_pos, float width, float height, sf::RenderWindow& window, const COLOUR bg_col = CUSTOM_COLOUR::Background );
+	BOX( float x_pos, float y_pos, float width, float height, sf::RenderWindow& window, const COLOUR bg_col = CUSTOM_COLOUR::BACKGROUND );
 	~BOX();
 
 	UI_OBJECT* get_if_mouse_over( sf::RenderWindow &window ) override;
@@ -30,7 +30,6 @@ public:
 protected:
 	sf::View*				m_view_box{ nullptr };
 
-private:
 	void reposition_embedded_object( UI_OBJECT * object );
 	void position_object_and_embed( UI_OBJECT* object );
 
@@ -44,6 +43,6 @@ private:
 	float m_box_y_pos{ 0 };
 	float m_box_width{ 0 };
 	float m_box_height{ 0 };
-	const float debug_line_thickness = 2.5f;
+	const float m_debug_line_thickness = 2.5f;
 };
 

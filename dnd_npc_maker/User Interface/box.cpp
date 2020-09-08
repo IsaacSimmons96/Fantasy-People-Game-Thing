@@ -5,7 +5,7 @@
 //-------------------------------------------------------------
 // BOX Constructor
 //-------------------------------------------------------------
-BOX::BOX( float x_pos, float y_pos, float width, float height, sf::RenderWindow& window, const COLOUR bg_col /*= CUSTOM_COLOUR::Background*/ )
+BOX::BOX( float x_pos, float y_pos, float width, float height, sf::RenderWindow& window, const COLOUR bg_col /*= CUSTOM_COLOUR::BACKGROUND*/ )
 {
 	m_colour = bg_col;
 
@@ -110,24 +110,24 @@ void BOX::draw( sf::RenderWindow & window )
 			const float view_box_size_y = m_view_box->getSize().y;
 
 			sf::RectangleShape top_outline;
-			top_outline.setSize( sf::Vector2f( m_box_width, debug_line_thickness ) );
+			top_outline.setSize( sf::Vector2f( m_box_width, m_debug_line_thickness ) );
 			top_outline.setFillColor( COLOUR::Red );
 			top_outline.setPosition( sf::Vector2f( m_box_x_pos, m_box_y_pos ) );
 
 			sf::RectangleShape left_outline;
-			left_outline.setSize( sf::Vector2f( debug_line_thickness, m_box_height ) );
+			left_outline.setSize( sf::Vector2f( m_debug_line_thickness, m_box_height ) );
 			left_outline.setFillColor( COLOUR::Red );
 			left_outline.setPosition( sf::Vector2f( m_box_x_pos, m_box_y_pos ) );
 
 			sf::RectangleShape right_outline;
-			right_outline.setSize( sf::Vector2f( debug_line_thickness, m_box_height ) );
+			right_outline.setSize( sf::Vector2f( m_debug_line_thickness, m_box_height ) );
 			right_outline.setFillColor( COLOUR::Red );
-			right_outline.setPosition( sf::Vector2f( m_box_width + m_box_x_pos - debug_line_thickness, m_box_y_pos ) );
+			right_outline.setPosition( sf::Vector2f( m_box_width + m_box_x_pos - m_debug_line_thickness, m_box_y_pos ) );
 
 			sf::RectangleShape bottom_outline;
-			bottom_outline.setSize( sf::Vector2f( m_box_width, debug_line_thickness ) );
+			bottom_outline.setSize( sf::Vector2f( m_box_width, m_debug_line_thickness ) );
 			bottom_outline.setFillColor( COLOUR::Red );
-			bottom_outline.setPosition( sf::Vector2f( m_box_x_pos, m_box_height + m_box_y_pos - debug_line_thickness ) );
+			bottom_outline.setPosition( sf::Vector2f( m_box_x_pos, m_box_height + m_box_y_pos - m_debug_line_thickness ) );
 
 			window.draw( top_outline );
 			window.draw( left_outline );

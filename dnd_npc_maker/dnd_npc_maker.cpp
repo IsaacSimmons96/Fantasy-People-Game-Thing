@@ -11,7 +11,7 @@
 #include "..\..\Headers\person.h"
 #include "..\..\Headers\console.h"
 #include "..\..\User Interface\menu_button.h"
-#include "..\..\User Interface\box.h"
+#include "..\..\User Interface\scrolling_box.h"
 
 //------------------------------------------------------------------------------------------------
 // CONSTANTS
@@ -267,13 +267,13 @@ int main()
 			test_button->set_font( font );
 			test_button->set_position( static_cast<float>( window.getSize().x / 2 ) - test_button->get_centre_x(), static_cast<float>( window.getSize().y / 2 ) - test_button->get_centre_y() );
 
-			BOX* test_box = new BOX( 100, 200, 800, 400, window );
+			SCROLLING_BOX* test_box = new SCROLLING_BOX( 100, 200, 800, 400, window );
 			test_box->set_debug( true );
 
 			BUTTON* test_button3 = new BUTTON( "Button 3", 150, 80, font, COLOUR::Cyan );
 			test_box->embed_object( test_button3, LAYOUT_ATTACHMENT::TOP_LEFT, 100, 0 );
 
-			MENU_BUTTON* menu_button = new MENU_BUTTON( 150, 80, font, CUSTOM_COLOUR::Skype );
+			MENU_BUTTON* menu_button = new MENU_BUTTON( 150, 80, font, CUSTOM_COLOUR::SKYPE );
 			menu_button->set_font( font );
 
 			std::vector<std::pair<std::string, uint32_t>> race_list;
@@ -323,7 +323,7 @@ int main()
 					}
 				}
 
-				window.clear( CUSTOM_COLOUR::Background );
+				window.clear( CUSTOM_COLOUR::BACKGROUND );
 				draw_ui_objects( window, ui_objects );
 				window.display();
 			}
