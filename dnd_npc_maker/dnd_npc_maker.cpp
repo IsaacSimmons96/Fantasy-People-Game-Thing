@@ -273,6 +273,9 @@ int main()
 			BUTTON* test_button3 = new BUTTON( "Button 3", 150, 80, font, COLOUR::Cyan );
 			test_box->embed_object( test_button3, LAYOUT_ATTACHMENT::TOP_LEFT, 100, 0 );
 
+			BUTTON* test_button4 = new BUTTON( "Button 4", 150, 80, font, COLOUR::Cyan );
+			test_box->embed_object( test_button4, LAYOUT_ATTACHMENT::TOP_LEFT, 500, 600 );
+
 			MENU_BUTTON* menu_button = new MENU_BUTTON( 150, 80, font, CUSTOM_COLOUR::SKYPE );
 			menu_button->set_font( font );
 
