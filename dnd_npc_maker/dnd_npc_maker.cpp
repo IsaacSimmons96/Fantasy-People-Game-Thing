@@ -131,7 +131,12 @@ void handle_mouse_events( sf::Event &event, sf::RenderWindow &window, std::list<
 	{
 		case sf::Event::MouseMoved:
 		{
-			if( new_mouse_over != old_mouse_over )
+			// Have we been holding the mouse object? If so then we need to try and drag it
+			if( new_mouse_over == old_mouse_over && old_mouse_over &&  old_mouse_over->can_drag() )
+			{			
+				old_mouse_over->handle_mouse_drag( window );
+			}
+			else if( new_mouse_over != old_mouse_over )
 			{
 				if( new_mouse_over )
 				{
@@ -140,7 +145,7 @@ void handle_mouse_events( sf::Event &event, sf::RenderWindow &window, std::list<
 
 				if( old_mouse_over )
 				{
-					// Have we been holding the mouse object? If so then we cancel the click
+					// Have we been holding the old mouse object? If so then we cancel the click
 					if( old_mouse_over->is_being_clicked() )
 					{
 						old_mouse_over->cancel();
@@ -155,7 +160,7 @@ void handle_mouse_events( sf::Event &event, sf::RenderWindow &window, std::list<
 		{
 			if( new_mouse_over )
 			{
-				new_mouse_over->handle_mouse_click( event.mouseButton.button );
+				new_mouse_over->handle_mouse_click( event.mouseButton.button, window );
 			}
 			break;
 		}
@@ -263,9 +268,9 @@ int main()
 
 			sf::RenderWindow window( sf::VideoMode( 1080, 720 ), APPLICATION_WINDOW_TITLE, sf::Style::Close | sf::Style::Titlebar );
 
-			BUTTON* test_button = new BUTTON( "Button 1", 150, 80, font, COLOUR::Yellow );
-			test_button->set_font( font );
-			test_button->set_position( static_cast<float>( window.getSize().x / 2 ) - test_button->get_centre_x(), static_cast<float>( window.getSize().y / 2 ) - test_button->get_centre_y() );
+			/*BUTTON* drag_button = new BUTTON( "Drag Button", 200, 200, font, COLOUR::Yellow );
+			drag_button->set_position( static_cast<float>( window.getSize().x / 2 ) - drag_button->get_centre_x(), 50 );
+			drag_button->set_can_drag( true );*/
 
 			SCROLLING_BOX* test_box = new SCROLLING_BOX( 100, 200, 800, 400, window );
 			test_box->set_debug( true );
@@ -289,6 +294,7 @@ int main()
 			test_box->embed_object( menu_button, LAYOUT_ATTACHMENT::CENTRE, -200, 0 );
 
 			ui_objects.push_back( test_box );
+			//ui_objects.push_back( drag_button );
 
 			int mouseDelta = 0;
 			while( window.isOpen() )
@@ -307,7 +313,6 @@ int main()
 							handle_mouse_events( event, window, ui_objects, current_mouse_over, object_needing_action );
 							break;
 						}
-							
 
 						case sf::Event::Closed:
 						{
@@ -331,16 +336,14 @@ int main()
 				window.display();
 			}
 
-			//TODO Isaac - make UI_OBJECT mouse over/click/hover handling with placeholders for the events being sent to the UI_OBJECT found
 			//TODO Isaac - finish button UI class make it into a abstract class when ive got more specific buttons setup
-			//TODO Isaac - make box UI class - IN PROGRESS
+			//TODO Isaac - figure out a system to get the UI_OBJECT on the highest layer when using UI_OBJECT::get_if_mouse_over()
 			//TODO Isaac - make panel UI class
-			//TODO Isaac - make scrolling box UI class
+			//TODO Isaac - make scrolling box UI class - IN PROGRESS
 			//TODO Isaac - make text box UI class
 			//TODO Isaac - make class called page that holds all the SFML ui and can draw everything inside it with one function - panel class
 		}
 
-		// return 0 ends the program
 		return 0;
 	}
 	else
@@ -348,12 +351,3 @@ int main()
 		return 0;
 	}
 }
-
-// in case i need this, this is how i scaled sizing for a weirdly sized view but im like 80% sure i dont need this anymore but that 20% says NO!
-/*const float box_width = 150;
-const float test_box_scale_width = (window.getSize().x - view_width);
-const float width_scale_by = (test_box_scale_width / view_width)* box_width;
-
-const float box_hieght = 80;
-const float test_box_scale_height = (window.getSize().y - view_height);
-const float height_scale_by = (test_box_scale_height / view_height) * box_hieght;*/

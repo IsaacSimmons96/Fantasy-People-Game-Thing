@@ -8,6 +8,12 @@ enum class MOUSE_WHEEL_DIRECTION : uint8_t
 	SCROLLING_DOWN
 };
 
+enum class MOUSE_DRAG_DIRECTION : uint8_t
+{
+	DRAGGING_UP,
+	DRAGGING_DOWN
+};
+
 //-------------------------------------------------------------------------------------------
 // UI_OBJECT is the base class for all ui classes in this program!
 // The idea being that all basic user interface functionality should be defined here!
@@ -20,6 +26,9 @@ public:
 
 	//POSITION
 	virtual void	set_position( const float &x, const float &y ) = 0;
+	virtual float	get_x_position() const = 0;
+	virtual float	get_y_position() const = 0;
+
 	virtual float	get_x_offset() const { return m_x_offset; };
 	virtual float	get_y_offset() const { return m_y_offset; };
 
@@ -54,11 +63,15 @@ public:
 	virtual bool	is_being_clicked() { return m_clicked; };
 	bool			is_awaiting_action() { return m_needs_action; };
 
-	virtual void	handle_mouse_click( sf::Mouse::Button button_type ) {};
+	virtual void	handle_mouse_click( sf::Mouse::Button button_type, sf::RenderWindow& window ) {};
 	virtual void	handle_mouse_release( sf::Mouse::Button button_type ) {};
+	virtual void	handle_mouse_drag( sf::RenderWindow & window )  {};
 	virtual void	handle_mouse_enter() {};
 	virtual void	handle_mouse_leave() {};
 	virtual void	handle_mouse_scroll( float mouse_wheel_direction ) {};
+
+	virtual void	set_can_drag( bool can_drag_in ) { m_can_drag = can_drag_in;  };
+	bool			can_drag() { return m_can_drag; };
 
 	//COLOURS
 	virtual void	set_colour( COLOUR colour_in );
@@ -76,6 +89,7 @@ public:
 
 protected:
 	bool m_clicked{ false };
+	bool m_can_drag{ false };
 	bool m_needs_action{ false };
 	bool m_debug{ false };
 

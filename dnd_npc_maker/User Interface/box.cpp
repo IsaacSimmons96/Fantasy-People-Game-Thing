@@ -300,6 +300,18 @@ float BOX::convert_to_0_to_1_scale( float input, float window_size )
 }
 
 //-------------------------------------------------------------
+float BOX::get_x_position() const
+{
+	return m_box_x_pos;
+}
+
+//-------------------------------------------------------------
+float BOX::get_y_position() const
+{
+	return m_box_y_pos;
+}
+
+//-------------------------------------------------------------
 // Adds a UI_OBJECT to the embedded objects list
 //-------------------------------------------------------------
 void BOX::embed_object( UI_OBJECT * object )

@@ -25,6 +25,8 @@ public:
 	float get_centre_y()	const override;
 	float get_width()		const override;
 	float get_height()		const override;
+	float get_x_position()	const override;
+	float get_y_position()	const override;
 	sf::View* get_view()	const { return m_view_box; };
 
 protected:

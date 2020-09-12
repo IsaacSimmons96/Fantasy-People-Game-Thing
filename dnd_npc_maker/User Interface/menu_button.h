@@ -17,13 +17,13 @@ public:
 	MENU_BUTTON( const float width, const float height, sf::Font* font, const COLOUR col = COLOUR::White);
 	~MENU_BUTTON();
 
-	UI_OBJECT* get_if_mouse_over(sf::RenderWindow &window)		override;
+	UI_OBJECT* get_if_mouse_over(sf::RenderWindow &window)									override;
 
-	void draw(sf::RenderWindow &window)							override;
-	void handle_mouse_click(sf::Mouse::Button button_type)		override;
-	void handle_mouse_release(sf::Mouse::Button button_type)	override;
-	void set_font(sf::Font* font)								override;
-	void cancel()												override;
+	void draw(sf::RenderWindow &window)														override;
+	void handle_mouse_click(sf::Mouse::Button button_type, sf::RenderWindow& window )		override;
+	void handle_mouse_release(sf::Mouse::Button button_type)								override;
+	void set_font(sf::Font* font)															override;
+	void cancel()																			override;
 
 	uint32_t	get_selected_value();
 	void		set_selected_index(uint32_t new_selection);

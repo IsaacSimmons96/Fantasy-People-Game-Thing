@@ -128,7 +128,7 @@ UI_OBJECT* MENU_BUTTON::get_if_mouse_over( sf::RenderWindow& window )
 //-------------------------------------------------------------
 // Handles what to do when clicked
 //-------------------------------------------------------------
-void MENU_BUTTON::handle_mouse_click( sf::Mouse::Button button_type )
+void MENU_BUTTON::handle_mouse_click( sf::Mouse::Button button_type, sf::RenderWindow& window )
 {
 	switch( button_type )
 	{
