@@ -87,10 +87,10 @@ void SCROLLING_BOX::handle_drag_scroll( MOUSE_DRAG_DIRECTION direction, int16_t 
 			if( m_scroll_value > 0 )
 			{
 				const auto new_to_scroll_value = std::clamp( m_scroll_value - std::abs( scrolled_value ), 0, static_cast<int>( m_max_scroll_value ) );
-				m_view_box->move( 0, -std::abs( scrolled_value ) );
+				m_view_box->move( 0.0f, (float)-std::abs( scrolled_value ) );
 				m_scroll_value = new_to_scroll_value;
 			}
-			break;
+			break;			
 		}
 	}
 

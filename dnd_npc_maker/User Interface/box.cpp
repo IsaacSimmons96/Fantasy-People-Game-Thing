@@ -294,7 +294,7 @@ void BOX::position_object_and_embed( UI_OBJECT * object )
 //-------------------------------------------------------------
 // 
 //-------------------------------------------------------------
-float BOX::convert_to_0_to_1_scale( float input, float window_size )
+float BOX::convert_to_0_to_1_scale( float input, unsigned int window_size )
 {
 	return input / window_size;
 }

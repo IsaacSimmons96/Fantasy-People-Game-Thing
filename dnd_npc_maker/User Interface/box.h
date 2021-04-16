@@ -35,7 +35,7 @@ protected:
 	void reposition_embedded_object( UI_OBJECT * object );
 	void position_object_and_embed( UI_OBJECT* object );
 
-	float convert_to_0_to_1_scale( float input, float window_size );
+	float convert_to_0_to_1_scale( float input, unsigned int window_size );
 
 	sf::RenderWindow*		m_parent_window{ nullptr };
 	std::vector<UI_OBJECT*> m_embedded_objects;
